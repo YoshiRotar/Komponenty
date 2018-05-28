@@ -288,7 +288,8 @@ public class MainWindow extends JFrame {
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
-				//
+				@SuppressWarnings("unused")
+				EditEvent add = new EditEvent();
 				
 			}
 		});

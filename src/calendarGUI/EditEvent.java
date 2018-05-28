@@ -10,17 +10,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class AddEvent extends Option
+public class EditEvent extends Option
 {
-	AddEvent()
+	//tutaj jako argument trzeba dac reprezentacje eventu w warstwie logiki
+	private void initValues()
+	{
+		//Uzupelnienie pol wartosciami
+	}
+	
+	EditEvent()
 	{
 		super();
-		
+		initValues();
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		panel.setMaximumSize(new Dimension(500, 30));
 		panel.setLayout(new FlowLayout());
-		JButton add = new JButton("Dodaj");
+		JButton add = new JButton("Edytuj");
 		add.addActionListener(new ActionListener() 
 		{
 		    public void actionPerformed(ActionEvent event) 
