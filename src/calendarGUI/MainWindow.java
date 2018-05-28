@@ -3,12 +3,12 @@ package calendarGUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -16,6 +16,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import calendardata.CalendarEvent;
+import calendarlogic.CalendarEventContext;
+import calendarlogic.DatabaseProvider;
+
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.JMenuBar;
@@ -66,20 +71,22 @@ public class MainWindow extends JFrame {
 		this.currentDay = currentDay;
 	}
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainWindow frame = new MainWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	public static void main(String[] args) 
+	{
+		MainWindow frame = new MainWindow();
+		frame.setVisible(true);
+		LocalDateTime dateTime = LocalDateTime.of(2015, 2, 13, 15, 30);
+		CalendarEventContext con = new CalendarEventContext();
+		con.addEvent(new CalendarEvent("Wspaniały Event", dateTime, dateTime.plusDays(10), "Najlepszy Event"));
+		con.addEvent(new CalendarEvent("Najgorszy Event", dateTime.plusDays(30), dateTime.plusDays(50), "Suabe"));
+		con.addEvent(new CalendarEvent("Taki Se Event", dateTime.plusDays(60), dateTime.plusDays(100), "Hue Hue"));
+		DatabaseProvider dp = new DatabaseProvider();
+		dp.writeIntoDatabase(con);
+		dp.readFromDatabase(con);
+		for (CalendarEvent c : con.getCalendarEvents())
+		{
+			System.out.println("N:" + c.getName() + " S:" + c.getStartOfEvent().toString() + " E:" + c.getEndOfEvent().toString() + " D:" + c.getDescription());
+		}
 	}	
 
 	public void initCalendarPanel(JPanel parent)
