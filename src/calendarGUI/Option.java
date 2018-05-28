@@ -31,8 +31,10 @@ public class Option extends JFrame
 	protected JTextField textFieldName;
 	protected JTextField textFieldPlace;
 	protected JTextArea textDescription;
-	protected JSpinner timeSpinner;
-	protected JSpinner dateSpinner;
+	protected JSpinner startTimeSpinner;
+	protected JSpinner endTimeSpinner;
+	protected JSpinner startDateSpinner;
+	protected JSpinner endDateSpinner;
 	protected JSpinner dateAlarmSpinner;
 	protected JSpinner timeAlarmSpinner;
 	
@@ -81,34 +83,34 @@ public class Option extends JFrame
 		contentPane.add(areaScrollPane);
 	}
 	
-	protected void addTime()
+	protected void addTime(String label, JSpinner spinner)
 	{
 		//godzina
-		JLabel label_3 = new JLabel("Data Wydarzenia");
+		JLabel label_3 = new JLabel(label);
 		label_3.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		contentPane.add(label_3);
 		
 		SpinnerModel model = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
-		timeSpinner = new JSpinner(model);
-		timeSpinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-		timeSpinner.setMaximumSize(new Dimension(500,30));
-		timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm:ss"));
-		contentPane.add(timeSpinner);
+		spinner = new JSpinner(model);
+		spinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		spinner.setMaximumSize(new Dimension(500,30));
+		spinner.setEditor(new JSpinner.DateEditor(spinner, "HH:mm:ss"));
+		contentPane.add(spinner);
 	}
 	
-	protected void addDate()
+	protected void addDate(String label, JSpinner spinner)
 	{
 		//data
-		JLabel label_5 = new JLabel("Czas Wydarzenia");
+		JLabel label_5 = new JLabel(label);
 		label_5.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		contentPane.add(label_5);
 		
 		SpinnerModel dateModel = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.YEAR);
-		dateSpinner = new JSpinner(dateModel);
-		dateSpinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-		dateSpinner.setMaximumSize(new Dimension(500,30));
-		dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy:MM:dd"));
-		contentPane.add(dateSpinner);
+		spinner = new JSpinner(dateModel);
+		spinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		spinner.setMaximumSize(new Dimension(500,30));
+		spinner.setEditor(new JSpinner.DateEditor(spinner, "dd:MM:yyyy"));
+		contentPane.add(spinner);
 	}
 	
 	protected void addAlarm()
@@ -165,7 +167,7 @@ public class Option extends JFrame
 		dateAlarmSpinner = new JSpinner(dateModel);
 		dateAlarmSpinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		dateAlarmSpinner.setMaximumSize(new Dimension(500,30));
-		dateAlarmSpinner.setEditor(new JSpinner.DateEditor(dateAlarmSpinner, "yyyy:MM:dd"));
+		dateAlarmSpinner.setEditor(new JSpinner.DateEditor(dateAlarmSpinner, "dd:MM:yyyy"));
 		alarmDatePanel.add(dateAlarmSpinner);
 		
 		contentPane.add(alarmDatePanel);
@@ -174,7 +176,7 @@ public class Option extends JFrame
 	
 	public Option()
 	{
-		setSize(300,500);
+		setSize(300,600);
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -185,8 +187,10 @@ public class Option extends JFrame
 		
 		addName();
 		addPlace();
-		addDate();
-		addTime();
+		addDate("Data rozpoczêcia", startDateSpinner);
+		addTime("Czas rozpoczêcia", startTimeSpinner);
+		addDate("Data Zakoñczenia", endDateSpinner);
+		addTime("Czas Zakoñczenia", endTimeSpinner);
 		addDescription();
 		addAlarm();
 	}
