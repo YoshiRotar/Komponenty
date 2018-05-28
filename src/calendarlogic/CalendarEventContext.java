@@ -1,11 +1,14 @@
 package calendarlogic;
 
+import java.util.Iterator;
 import java.util.TreeSet;
 
+
 import calendardata.CalendarEvent;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-//jeszcze nie wiem jak to wpiąć w pola kalendarza i jak to ogólnie będzie działać
 public class CalendarEventContext 
 {
 	TreeSet<CalendarEvent> calendarEvents;
@@ -41,10 +44,25 @@ public class CalendarEventContext
         if(calendarEvents.ceiling(temp).compareTo(calendarEvents.floor(temp)) == 0) return calendarEvents.ceiling(temp);
         else return null;
     }
-        
-        //coś ma być
-    boolean editEvent(CalendarEvent before, CalendarEvent after)
+    
+    TreeSet<CalendarEvent> getEventsFromCertainDay(LocalDate date)
     {
-                
+    	TreeSet<CalendarEvent> result = new TreeSet<CalendarEvent>();
+    	Iterator<CalendarEvent> iterator = calendarEvents.iterator();
+    	while(iterator.hasNext())
+    	{
+    		if(iterator.next().getStartOfEvent().toLocalDate().isEqual(date)) result.add(iterator.next());
+    	}
+    	return result;
+    }
+        
+    boolean editEvent(CalendarEvent event, String name, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description)
+    {
+    	if(!calendarEvents.contains(event)) return false;
+    	event.setName(name);
+    	event.setStartOfEvent(startOfEvent);
+    	event.setEndOfEvent(endOfEvent);
+    	event.setDescription(description);
+    	return true;
     }
 }
