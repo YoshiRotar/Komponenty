@@ -45,7 +45,7 @@ public class CalendarEventContext
         
     public CalendarEvent getEvent(LocalDateTime dateOfEvent)
     {
-    	CalendarEvent temp = new CalendarEvent(null, dateOfEvent, null, null);
+    	CalendarEvent temp = new CalendarEvent(null, null, dateOfEvent, null, null);
         if(calendarEvents.ceiling(temp).compareTo(calendarEvents.floor(temp)) == 0) return calendarEvents.ceiling(temp);
         else return null;
     }
@@ -61,10 +61,11 @@ public class CalendarEventContext
     	return result;
     }
         
-    public boolean editEvent(CalendarEvent event, String name, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description)
+    public boolean editEvent(CalendarEvent event, String name, String place, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description)
     {
     	if(!calendarEvents.contains(event)) return false;
     	event.setName(name);
+    	event.setPlace(place);
     	event.setStartOfEvent(startOfEvent);
     	event.setEndOfEvent(endOfEvent);
     	event.setDescription(description);

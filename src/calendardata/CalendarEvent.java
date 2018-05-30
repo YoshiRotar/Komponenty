@@ -5,14 +5,16 @@ import java.time.LocalDateTime;
 public class CalendarEvent implements Comparable<CalendarEvent>
 {
 	String name;
+	String place;
 	LocalDateTime startOfEvent;
 	LocalDateTime endOfEvent;
 	String description;
 	
-	public CalendarEvent(String name, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description) 
+	public CalendarEvent(String name, String place, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description) 
 	{
 		super();
 		this.name = name;
+		this.place = place;
 		this.startOfEvent = startOfEvent;
 		this.endOfEvent = endOfEvent;
 		this.description = description;
@@ -26,6 +28,16 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 	public void setName(String name) 
 	{
 		this.name = name;
+	}
+
+	public String getPlace()
+	{
+		return place;
+	}
+
+	public void setPlace(String place)
+	{
+		this.place = place;
 	}
 
 	public LocalDateTime getStartOfEvent() 

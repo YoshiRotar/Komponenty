@@ -45,6 +45,7 @@ public class DatabaseProvider
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		String name;
+		String place;
 		LocalDateTime startOfEvent;
 		LocalDateTime endOfEvent;
 		String description;
@@ -57,10 +58,11 @@ public class DatabaseProvider
 			while(resultSet.next())
 			{
 				name = resultSet.getString("Name");
+				place = resultSet.getString("Place");
 				startOfEvent = resultSet.getTimestamp("StartOfEvent").toLocalDateTime();
 				endOfEvent = resultSet.getTimestamp("EndOfEvent").toLocalDateTime();
 				description = resultSet.getString("Description");
-				temp = new CalendarEvent(name, startOfEvent, endOfEvent, description);
+				temp = new CalendarEvent(name, place, startOfEvent, endOfEvent, description);
 				context.getCalendarEvents().add(temp);
 			}
 			resultSet.close();
@@ -77,6 +79,7 @@ public class DatabaseProvider
 	{
 		PreparedStatement preparedStatement;
 		String name;
+		String place;
 		Timestamp startOfEvent;
 		Timestamp endOfEvent;
 		String description;
@@ -86,19 +89,21 @@ public class DatabaseProvider
 			this.openConnection();
 			preparedStatement = this.connection.prepareStatement("TRUNCATE TABLE `CalendarEvent`");
 			preparedStatement.executeUpdate();
-			preparedStatement = this.connection.prepareStatement("INSERT INTO `CalendarEvent`(`Name`, `StartOfEvent`, `EndOfEvent`, `Description`) VALUES (?, ?, ?, ?)");
+			preparedStatement = this.connection.prepareStatement("INSERT INTO `CalendarEvent`(`Name`, `Place`, `StartOfEvent`, `EndOfEvent`, `Description`) VALUES (?, ?, ?, ?, ?)");
 			Iterator<CalendarEvent> iterator = context.getCalendarEvents().iterator();
 			while(iterator.hasNext())
 			{
 				temp = iterator.next();
 				name = temp.getName();
+				place = temp.getPlace();
 				startOfEvent = Timestamp.valueOf(temp.getStartOfEvent());
 				endOfEvent = Timestamp.valueOf(temp.getEndOfEvent());
 				description = temp.getDescription();
 				preparedStatement.setString(1, name);
-	            preparedStatement.setTimestamp(2, startOfEvent);
-	            preparedStatement.setTimestamp(3, endOfEvent);
-	            preparedStatement.setString(4, description);
+				preparedStatement.setString(2, place);
+	            preparedStatement.setTimestamp(3, startOfEvent);
+	            preparedStatement.setTimestamp(4, endOfEvent);
+	            preparedStatement.setString(5, description);
 	            preparedStatement.executeUpdate();
 			}
 			preparedStatement.close();
