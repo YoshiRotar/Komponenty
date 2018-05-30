@@ -32,7 +32,7 @@ import javax.swing.BoxLayout;
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	
-	private CalendarEventContext calendarEventContext = new CalendarEventContext();
+	private final CalendarEventContext calendarEventContext = new CalendarEventContext();
 	private int month = Calendar.getInstance().get(Calendar.MONTH);
 	private int year = Calendar.getInstance().get(Calendar.YEAR);;
 	private int currentDay = 0;
@@ -86,7 +86,7 @@ public class MainWindow extends JFrame {
 		LocalDateTime dateTime = LocalDateTime.of(2018, 3, 13, 15, 30);
 		calendarEventContext.addEvent(new CalendarEvent("Wspaniały Event", "Strzebrzeszyny Dolne", dateTime, dateTime.plusDays(10), "Najlepszy Event"));
 		calendarEventContext.addEvent(new CalendarEvent("Najgorszy Event", "Nieistotne", dateTime.plusDays(30), dateTime.plusDays(50), "Suabe"));
-		calendarEventContext.addEvent(new CalendarEvent("Taki Se Event", "Moje miasto", dateTime.plusDays(60), dateTime.plusDays(100), "Hue Hue"));
+//		calendarEventContext.addEvent(new CalendarEvent("Taki Se Event", "Moje miasto", dateTime.plusDays(60), dateTime.plusDays(100), "Hue Hue"));
 		DatabaseProvider dp = new DatabaseProvider();
 		dp.writeIntoDatabase(calendarEventContext);
 		dp.readFromDatabase(calendarEventContext);
@@ -294,7 +294,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent ae) 
 			{
 				@SuppressWarnings("unused")
-				AddEvent add = new AddEvent((CalendarEventContext)(((JButton)(ae.getSource())).getClientProperty(calendarEventContext)));
+				AddEvent add = new AddEvent(calendarEventContext);
 			}
 		});
 		newEvent.setPreferredSize(buttonSize);
@@ -316,7 +316,7 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent ae) 
 			{
 				@SuppressWarnings("unused")
-				EditEvent add = new EditEvent((CalendarEventContext)(((JButton)(ae.getSource())).getClientProperty(calendarEventContext)));
+				EditEvent add = new EditEvent(calendarEventContext);
 			}
 		});
 		editEvent.setPreferredSize(buttonSize);

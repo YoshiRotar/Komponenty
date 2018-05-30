@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 public class CalendarEventContext 
 {
-	TreeSet<CalendarEvent> calendarEvents = new TreeSet<CalendarEvent>();
+	private TreeSet<CalendarEvent> calendarEvents = new TreeSet<CalendarEvent>();
 	
 	public TreeSet<CalendarEvent> getCalendarEvents()
 	{

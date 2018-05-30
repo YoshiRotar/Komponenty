@@ -34,10 +34,18 @@ public class Option extends JFrame
 	protected JTextField textFieldName;
 	protected JTextField textFieldPlace;
 	protected JTextArea textDescription;
-	protected JSpinner timeSpinner;
-	protected JSpinner dateSpinner;
-	protected JSpinner dateAlarmSpinner;
-	protected JSpinner timeAlarmSpinner;
+	protected SpinnerModel timeModel1 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
+	protected SpinnerModel timeModel2 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
+	protected SpinnerModel timeModel3 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
+	protected SpinnerModel dateModel1 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.YEAR);
+	protected SpinnerModel dateModel2 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.YEAR);
+	protected SpinnerModel dateModel3 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.YEAR);
+	protected JSpinner startTimeSpinner = new JSpinner(timeModel1);
+	protected JSpinner endTimeSpinner = new JSpinner(timeModel2);
+	protected JSpinner startDateSpinner = new JSpinner(dateModel1);
+	protected JSpinner endDateSpinner = new JSpinner(dateModel2);
+	protected JSpinner dateAlarmSpinner = new JSpinner(dateModel3);
+	protected JSpinner timeAlarmSpinner = new JSpinner(timeModel3);
 	
 
 	protected void addName()
@@ -84,34 +92,28 @@ public class Option extends JFrame
 		contentPane.add(areaScrollPane);
 	}
 	
-	protected void addTime()
+	protected void addTime(String label, JSpinner spinner)
 	{
 		//godzina
-		JLabel label_3 = new JLabel("Data Wydarzenia");
+		JLabel label_3 = new JLabel(label);
 		label_3.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		contentPane.add(label_3);
-		
-		SpinnerModel model = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
-		timeSpinner = new JSpinner(model);
-		timeSpinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-		timeSpinner.setMaximumSize(new Dimension(500,30));
-		timeSpinner.setEditor(new JSpinner.DateEditor(timeSpinner, "HH:mm:ss"));
-		contentPane.add(timeSpinner);
+		spinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		spinner.setMaximumSize(new Dimension(500,30));
+		spinner.setEditor(new JSpinner.DateEditor(spinner, "HH:mm:ss"));
+		contentPane.add(spinner);
 	}
 	
-	protected void addDate()
+	protected void addDate(String label, JSpinner spinner)
 	{
 		//data
-		JLabel label_5 = new JLabel("Czas Wydarzenia");
+		JLabel label_5 = new JLabel(label);
 		label_5.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		contentPane.add(label_5);
-		
-		SpinnerModel dateModel = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.YEAR);
-		dateSpinner = new JSpinner(dateModel);
-		dateSpinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-		dateSpinner.setMaximumSize(new Dimension(500,30));
-		dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy:MM:dd"));
-		contentPane.add(dateSpinner);
+		spinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		spinner.setMaximumSize(new Dimension(500,30));
+		spinner.setEditor(new JSpinner.DateEditor(spinner, "dd:MM:yyyy"));
+		contentPane.add(spinner);
 	}
 	
 	protected void addAlarm()
@@ -152,8 +154,6 @@ public class Option extends JFrame
 		alarmTimeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		alarmDatePanel.add(alarmTimeLabel);
 		
-		SpinnerModel model = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
-		timeAlarmSpinner = new JSpinner(model);
 		timeAlarmSpinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		timeAlarmSpinner.setMaximumSize(new Dimension(500,30));
 		timeAlarmSpinner.setEditor(new JSpinner.DateEditor(timeAlarmSpinner, "HH:mm:ss"));
@@ -164,11 +164,9 @@ public class Option extends JFrame
 		alarmDateLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		alarmDatePanel.add(alarmDateLabel);
 		
-		SpinnerModel dateModel = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.YEAR);
-		dateAlarmSpinner = new JSpinner(dateModel);
 		dateAlarmSpinner.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		dateAlarmSpinner.setMaximumSize(new Dimension(500,30));
-		dateAlarmSpinner.setEditor(new JSpinner.DateEditor(dateAlarmSpinner, "yyyy:MM:dd"));
+		dateAlarmSpinner.setEditor(new JSpinner.DateEditor(dateAlarmSpinner, "dd:MM:yyyy"));
 		alarmDatePanel.add(dateAlarmSpinner);
 		
 		contentPane.add(alarmDatePanel);
@@ -177,8 +175,8 @@ public class Option extends JFrame
 	
 	public Option(CalendarEventContext calendarEventContext)
 	{
+		setSize(300,600);
 		this.calendarEventContext = calendarEventContext;
-		setSize(300,500);
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
 		contentPane = new JPanel();
@@ -189,8 +187,10 @@ public class Option extends JFrame
 		
 		addName();
 		addPlace();
-		addDate();
-		addTime();
+		addDate("Data rozpoczęcia", this.startDateSpinner);
+		addTime("Czas rozpoczęcia", this.startTimeSpinner);
+		addDate("Data Zakończenia", this.endDateSpinner);
+		addTime("Czas Zakończenia", this.endTimeSpinner);
 		addDescription();
 		addAlarm();
 	}
