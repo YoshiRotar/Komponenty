@@ -77,15 +77,15 @@ public class MainWindow extends JFrame {
 		frame.setVisible(true);
 		LocalDateTime dateTime = LocalDateTime.of(2015, 2, 13, 15, 30);
 		CalendarEventContext con = new CalendarEventContext();
-		con.addEvent(new CalendarEvent("Wspaniały Event", dateTime, dateTime.plusDays(10), "Najlepszy Event"));
-		con.addEvent(new CalendarEvent("Najgorszy Event", dateTime.plusDays(30), dateTime.plusDays(50), "Suabe"));
-		con.addEvent(new CalendarEvent("Taki Se Event", dateTime.plusDays(60), dateTime.plusDays(100), "Hue Hue"));
+		con.addEvent(new CalendarEvent("Wspaniały Event", "Strzebrzeszyny Dolne", dateTime, dateTime.plusDays(10), "Najlepszy Event"));
+		con.addEvent(new CalendarEvent("Najgorszy Event", "Nieistotne", dateTime.plusDays(30), dateTime.plusDays(50), "Suabe"));
+		con.addEvent(new CalendarEvent("Taki Se Event", "Moje miasto", dateTime.plusDays(60), dateTime.plusDays(100), "Hue Hue"));
 		DatabaseProvider dp = new DatabaseProvider();
 		dp.writeIntoDatabase(con);
 		dp.readFromDatabase(con);
 		for (CalendarEvent c : con.getCalendarEvents())
 		{
-			System.out.println("N:" + c.getName() + " S:" + c.getStartOfEvent().toString() + " E:" + c.getEndOfEvent().toString() + " D:" + c.getDescription());
+			System.out.println("N:" + c.getName() + " P:" + c.getPlace() + " S:" + c.getStartOfEvent().toString() + " E:" + c.getEndOfEvent().toString() + " D:" + c.getDescription());
 		}
 	}	
 
