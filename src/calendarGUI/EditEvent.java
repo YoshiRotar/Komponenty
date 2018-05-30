@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import calendarlogic.CalendarEventContext;
+
 @SuppressWarnings("serial")
 public class EditEvent extends Option
 {
@@ -18,9 +20,9 @@ public class EditEvent extends Option
 		//Uzupelnienie pol wartosciami
 	}
 	
-	EditEvent()
+	EditEvent(CalendarEventContext calendarEventContext)
 	{
-		super();
+		super(calendarEventContext);
 		initValues();
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(JLabel.LEFT_ALIGNMENT);

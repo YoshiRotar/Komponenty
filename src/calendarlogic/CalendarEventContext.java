@@ -20,7 +20,11 @@ public class CalendarEventContext
 
 	public boolean addEvent(CalendarEvent newEvent)
 	{
-		if(calendarEvents.lower(newEvent) == null)
+		if(newEvent.getName() == null || newEvent.getStartOfEvent() == null)
+		{
+			return false;
+		}
+		else if(calendarEvents.lower(newEvent) == null)
 		{
 			return calendarEvents.add(newEvent);
 		}
@@ -53,10 +57,12 @@ public class CalendarEventContext
     public TreeSet<CalendarEvent> getEventsFromCertainDay(LocalDate date)
     {
     	TreeSet<CalendarEvent> result = new TreeSet<CalendarEvent>();
+    	CalendarEvent temp;
     	Iterator<CalendarEvent> iterator = calendarEvents.iterator();
     	while(iterator.hasNext())
     	{
-    		if(iterator.next().getStartOfEvent().toLocalDate().isEqual(date)) result.add(iterator.next());
+    		temp = iterator.next();
+    		if(temp.getStartOfEvent().toLocalDate().isEqual(date)) result.add(temp);
     	}
     	return result;
     }

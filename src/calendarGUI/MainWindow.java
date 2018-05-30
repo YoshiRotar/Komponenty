@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Calendar;
 
@@ -31,11 +32,12 @@ import javax.swing.BoxLayout;
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame {
 	
+	private CalendarEventContext calendarEventContext = new CalendarEventContext();
 	private int month = Calendar.getInstance().get(Calendar.MONTH);
 	private int year = Calendar.getInstance().get(Calendar.YEAR);;
 	private int currentDay = 0;
 	private JPanel contentPane;
-	JScrollPane scrollPane;
+	private JScrollPane scrollPane;
 	private JLabel date = new JLabel("", SwingConstants.CENTER);
 	private JButton[] days = new JButton[42];
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -74,21 +76,26 @@ public class MainWindow extends JFrame {
 	public static void main(String[] args) 
 	{
 		MainWindow frame = new MainWindow();
+		frame.test();
+		frame.printCalendar();
 		frame.setVisible(true);
-		LocalDateTime dateTime = LocalDateTime.of(2015, 2, 13, 15, 30);
-		CalendarEventContext con = new CalendarEventContext();
-		con.addEvent(new CalendarEvent("Wspaniały Event", "Strzebrzeszyny Dolne", dateTime, dateTime.plusDays(10), "Najlepszy Event"));
-		con.addEvent(new CalendarEvent("Najgorszy Event", "Nieistotne", dateTime.plusDays(30), dateTime.plusDays(50), "Suabe"));
-		con.addEvent(new CalendarEvent("Taki Se Event", "Moje miasto", dateTime.plusDays(60), dateTime.plusDays(100), "Hue Hue"));
+	}	
+
+	private void test()
+	{
+		LocalDateTime dateTime = LocalDateTime.of(2018, 3, 13, 15, 30);
+		calendarEventContext.addEvent(new CalendarEvent("Wspaniały Event", "Strzebrzeszyny Dolne", dateTime, dateTime.plusDays(10), "Najlepszy Event"));
+		calendarEventContext.addEvent(new CalendarEvent("Najgorszy Event", "Nieistotne", dateTime.plusDays(30), dateTime.plusDays(50), "Suabe"));
+		calendarEventContext.addEvent(new CalendarEvent("Taki Se Event", "Moje miasto", dateTime.plusDays(60), dateTime.plusDays(100), "Hue Hue"));
 		DatabaseProvider dp = new DatabaseProvider();
-		dp.writeIntoDatabase(con);
-		dp.readFromDatabase(con);
-		for (CalendarEvent c : con.getCalendarEvents())
+		dp.writeIntoDatabase(calendarEventContext);
+		dp.readFromDatabase(calendarEventContext);
+		for (CalendarEvent c : calendarEventContext.getCalendarEvents())
 		{
 			System.out.println("N:" + c.getName() + " P:" + c.getPlace() + " S:" + c.getStartOfEvent().toString() + " E:" + c.getEndOfEvent().toString() + " D:" + c.getDescription());
 		}
-	}	
-
+	}
+	
 	public void initCalendarPanel(JPanel parent)
 	{
 		 String[] weekDays = {"Pon", "Wt", "Sr", "Czw", "Pt", "So", "N"};
@@ -127,7 +134,15 @@ public class MainWindow extends JFrame {
 		 {
 			 public void actionPerformed(ActionEvent ae) 
 			 {
-				 month--;
+				 if(month != 0)
+				 {
+					 month-- ;
+				 }
+				 else
+				 {
+					 month = 11;
+					 year--;
+				 }
 				 printCalendar();
 			 }
 		 });
@@ -137,7 +152,15 @@ public class MainWindow extends JFrame {
 		 {
 			 public void actionPerformed(ActionEvent ae) 
 			 {
-				 month++;
+				 if(month != 11)
+				 {
+					 month++ ;
+				 }
+				 else
+				 {
+					 month = 0;
+					 year++;
+				 }
 				 printCalendar();
 			 }
 		 });
@@ -163,16 +186,14 @@ public class MainWindow extends JFrame {
 		 int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		 for(int i=0; i<daysInMonth; i++)
 		 {
+			 days[i+dayOfWeek-1].setBackground(Color.WHITE);
 			 days[i+dayOfWeek-1].setText(Integer.toString(i+1));
+			 if(!this.calendarEventContext.getEventsFromCertainDay(LocalDate.of(this.year, this.month+1, i+1)).isEmpty()) days[i+dayOfWeek-1].setBackground(Color.GREEN);
 		 }
 		 date.setText(format.format(calendar.getTime()));
 		 if(buttonSelected!=null) buttonSelected.setBackground(Color.LIGHT_GRAY);
 	 }
 	
-	
-	/**
-	 * Create the frame.
-	 */
 	public MainWindow() {
 		
 		super("Turbo Calendar 0.3");
@@ -214,7 +235,7 @@ public class MainWindow extends JFrame {
 		JMenu mnNewMenu = new JMenu("Edycja");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmUsuWydarzeniaStarsza = new JMenuItem("Usu\u0144 wydarzenia starsze od...");
+		JMenuItem mntmUsuWydarzeniaStarsza = new JMenuItem("Usuń wydarzenia starsze od...");
 		mnNewMenu.add(mntmUsuWydarzeniaStarsza);
 		
 		JMenuItem mntmFiltruj = new JMenuItem("Filtruj");
@@ -273,13 +294,12 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent ae) 
 			{
 				@SuppressWarnings("unused")
-				AddEvent add = new AddEvent();
-				
+				AddEvent add = new AddEvent((CalendarEventContext)(((JButton)(ae.getSource())).getClientProperty(calendarEventContext)));
 			}
 		});
 		newEvent.setPreferredSize(buttonSize);
 		
-		JButton deleteEvent = new JButton("Usu� Wydarzenie");
+		JButton deleteEvent = new JButton("Usuń Wydarzenie");
 		deleteEvent.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
@@ -296,13 +316,12 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent ae) 
 			{
 				@SuppressWarnings("unused")
-				EditEvent add = new EditEvent();
-				
+				EditEvent add = new EditEvent((CalendarEventContext)(((JButton)(ae.getSource())).getClientProperty(calendarEventContext)));
 			}
 		});
 		editEvent.setPreferredSize(buttonSize);
 		
-		JButton toCurrentDay = new JButton("Bie��cy Dzie�");
+		JButton toCurrentDay = new JButton("Bieżący Dzień");
 		toCurrentDay.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 

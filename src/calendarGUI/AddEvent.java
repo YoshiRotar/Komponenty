@@ -4,17 +4,20 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import calendarlogic.CalendarEventContext;
+
 @SuppressWarnings("serial")
 public class AddEvent extends Option
 {
-	AddEvent()
+	AddEvent(CalendarEventContext calendarEventContext)
 	{
-		super();
+		super(calendarEventContext);
 		
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
@@ -25,7 +28,11 @@ public class AddEvent extends Option
 		{
 		    public void actionPerformed(ActionEvent event) 
 		    {
-		    	//dodawanie
+		    	String name = textFieldName.getText();
+		    	String plcae = textFieldPlace.getText();
+		    	LocalDateTime startOfEvent = LocalDateTime.of()
+		    	String description = textDescription.getText();
+		    	calendarEventContext.addEvent(new())
 				dispose();
 		    }
 		});

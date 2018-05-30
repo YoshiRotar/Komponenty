@@ -21,11 +21,14 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
+import calendarlogic.CalendarEventContext;
+
 
 @SuppressWarnings("serial")
 public class Option extends JFrame
 {
 
+	protected CalendarEventContext calendarEventContext;
 	protected JPanel contentPane;
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	protected JTextField textFieldName;
@@ -172,8 +175,9 @@ public class Option extends JFrame
 		for(Component c : alarmDatePanel.getComponents()) c.setEnabled(false);
 	}
 	
-	public Option()
+	public Option(CalendarEventContext calendarEventContext)
 	{
+		this.calendarEventContext = calendarEventContext;
 		setSize(300,500);
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
