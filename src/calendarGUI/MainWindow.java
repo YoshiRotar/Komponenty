@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -18,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import calendardata.CalendarEvent;
 import calendarlogic.CalendarEventContext;
 import calendarlogic.DatabaseProvider;
 
@@ -42,6 +40,8 @@ public class MainWindow extends JFrame {
 	private JButton[] days = new JButton[42];
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	private JButton buttonSelected;
+	private int selectedMonth;
+	private int selectedYear;
 	
 	public int getMonth() 
 	{
@@ -76,25 +76,9 @@ public class MainWindow extends JFrame {
 	public static void main(String[] args) 
 	{
 		MainWindow frame = new MainWindow();
-		frame.test();
 		frame.printCalendar();
 		frame.setVisible(true);
 	}	
-
-	private void test()
-	{
-		LocalDateTime dateTime = LocalDateTime.of(2018, 3, 13, 15, 30);
-		calendarEventContext.addEvent(new CalendarEvent("Wspaniały Event", "Strzebrzeszyny Dolne", dateTime, dateTime.plusDays(10), "Najlepszy Event"));
-		calendarEventContext.addEvent(new CalendarEvent("Najgorszy Event", "Nieistotne", dateTime.plusDays(30), dateTime.plusDays(50), "Suabe"));
-//		calendarEventContext.addEvent(new CalendarEvent("Taki Se Event", "Moje miasto", dateTime.plusDays(60), dateTime.plusDays(100), "Hue Hue"));
-		DatabaseProvider dp = new DatabaseProvider();
-		dp.writeIntoDatabase(calendarEventContext);
-		dp.readFromDatabase(calendarEventContext);
-		for (CalendarEvent c : calendarEventContext.getCalendarEvents())
-		{
-			System.out.println("N:" + c.getName() + " P:" + c.getPlace() + " S:" + c.getStartOfEvent().toString() + " E:" + c.getEndOfEvent().toString() + " D:" + c.getDescription());
-		}
-	}
 	
 	public void initCalendarPanel(JPanel parent)
 	{
@@ -121,6 +105,8 @@ public class MainWindow extends JFrame {
 						scrollPane.setViewportView(new JLabel(currentDay+", "+date.getText(), SwingConstants.CENTER));
 						if(buttonSelected!=null) buttonSelected.setBackground(Color.WHITE);
 						buttonSelected = (JButton)ae.getSource();
+						selectedMonth = month;
+						selectedYear = year;
 						printCalendar();
 					}
 					
@@ -191,7 +177,7 @@ public class MainWindow extends JFrame {
 			 if(!this.calendarEventContext.getEventsFromCertainDay(LocalDate.of(this.year, this.month+1, i+1)).isEmpty()) days[i+dayOfWeek-1].setBackground(Color.GREEN);
 		 }
 		 date.setText(format.format(calendar.getTime()));
-		 if(buttonSelected!=null) buttonSelected.setBackground(Color.LIGHT_GRAY);
+		 if(buttonSelected!=null && month==selectedMonth && year==selectedYear) buttonSelected.setBackground(Color.LIGHT_GRAY);
 	 }
 	
 	public MainWindow() {
@@ -218,12 +204,29 @@ public class MainWindow extends JFrame {
 		mnPlik.add(mntmNowy);
 		
 		JMenuItem mntmZapiszDoBazdy = new JMenuItem("Zapisz do bazy danych");
+		mntmZapiszDoBazdy.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent ae) 
+			{
+				DatabaseProvider databaseProvider = new DatabaseProvider();
+				databaseProvider.writeIntoDatabase(calendarEventContext);
+			}
+		});
 		mnPlik.add(mntmZapiszDoBazdy);
 		
 		JMenuItem mntmZapiszDoXml = new JMenuItem("Zapisz do XML");
 		mnPlik.add(mntmZapiszDoXml);
 		
 		JMenuItem mntmWczytajZBazy = new JMenuItem("Wczytaj z bazy danych");
+		mntmWczytajZBazy.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent ae) 
+			{
+				DatabaseProvider databaseProvider = new DatabaseProvider();
+				databaseProvider.readFromDatabase(calendarEventContext);
+				printCalendar();
+			}
+		});
 		mnPlik.add(mntmWczytajZBazy);
 		
 		JMenuItem mntmWczytajZXml = new JMenuItem("Wczytaj z XML");
