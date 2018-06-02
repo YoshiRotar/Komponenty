@@ -47,6 +47,8 @@ public class MainWindow extends JFrame
 	private int selectedMonth;
 	private int selectedYear;
 	private JButton selectedEvent;
+	private JButton editEvent;
+	private JButton deleteEvent;
 	
 	public int getMonth() 
 	{
@@ -79,6 +81,8 @@ public class MainWindow extends JFrame
 	{
 		if(buttonSelected==null) return;
 		selectedEvent=null;
+		editEvent.setEnabled(false);
+		deleteEvent.setEnabled(false);
 		eventsLabel.setText("Wydarzenia z dnia: "+ buttonSelected.getText() + " " +date.getText());
 		int day = Integer.parseInt(buttonSelected.getText());
 		
@@ -106,6 +110,8 @@ public class MainWindow extends JFrame
 					if(selectedEvent!=null) selectedEvent.setBackground(Color.WHITE);
 					selectedEvent = (JButton) ae.getSource();
 					selectedEvent.setBackground(Color.LIGHT_GRAY);
+					editEvent.setEnabled(true);
+					deleteEvent.setEnabled(true);
 				}
 			});
 			scrollingEventPanel.add(button, null);
@@ -345,7 +351,7 @@ public class MainWindow extends JFrame
 		});
 		newEvent.setPreferredSize(buttonSize);
 		
-		JButton deleteEvent = new JButton("Usuń Wydarzenie");
+		deleteEvent = new JButton("Usuń Wydarzenie");
 		deleteEvent.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
@@ -356,7 +362,7 @@ public class MainWindow extends JFrame
 		});
 		deleteEvent.setPreferredSize(buttonSize);
 		
-		JButton editEvent = new JButton("Edytuj Wydarzenie");
+		editEvent = new JButton("Edytuj Wydarzenie");
 		editEvent.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
@@ -396,6 +402,9 @@ public class MainWindow extends JFrame
 		options.add(deleteEvent);
 		options.add(editEvent);
 		options.add(toCurrentDay);
+		
+		editEvent.setEnabled(false);
+		deleteEvent.setEnabled(false);
 		
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(0,50));
