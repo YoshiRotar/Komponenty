@@ -7,6 +7,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
@@ -48,7 +51,8 @@ public class MainWindow extends JFrame
 	private JButton buttonSelected;
 	private int selectedMonth;
 	private int selectedYear;
-	private JButton selectedEvent;
+	private JButton selectedEventButton;
+	private CalendarEvent selectedEvent;
 	private JButton editEvent;
 	private JButton deleteEvent;
 	
@@ -93,7 +97,8 @@ public class MainWindow extends JFrame
 	public void printEvents()
 	{
 		if(buttonSelected==null) return;
-		selectedEvent=null;
+		selectedEventButton = null;
+		selectedEvent = null;
 		editEvent.setEnabled(false);
 		deleteEvent.setEnabled(false);
 		eventsLabel.setText("Wydarzenia z dnia: "+ buttonSelected.getText() + " " +date.getText());
@@ -120,12 +125,27 @@ public class MainWindow extends JFrame
 			{
 				public void actionPerformed(ActionEvent ae) 
 				{
-					if(selectedEvent!=null) selectedEvent.setBackground(Color.WHITE);
-					selectedEvent = (JButton) ae.getSource();
-					selectedEvent.setBackground(Color.LIGHT_GRAY);
+					if(selectedEventButton!=null) selectedEventButton.setBackground(Color.WHITE);
+					selectedEventButton = (JButton) ae.getSource();
+					selectedEventButton.setBackground(Color.LIGHT_GRAY);
+					selectedEvent = calendarEvent;
 					editEvent.setEnabled(true);
 					deleteEvent.setEnabled(true);
 				}
+			});
+			
+			button.addMouseListener(new MouseAdapter() 
+			{
+				@Override
+				public void mousePressed(MouseEvent e) 
+				{
+					if(e.getClickCount()==2)
+					{
+						@SuppressWarnings("unused")
+						Details d = new Details(selectedEvent);
+					}
+				}
+				
 			});
 			scrollingEventPanel.add(button, null);
 		}
@@ -243,6 +263,15 @@ public class MainWindow extends JFrame
 		setSize(1280,720);
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
+		
+		this.addWindowListener( new WindowAdapter()
+		{
+		   public void windowClosing(WindowEvent e)
+		   {
+		      calendarEventContext.encodeToXml();
+		      dispose();
+		   }
+		});
 		
 		this.addWindowListener( new WindowAdapter()
 		{
