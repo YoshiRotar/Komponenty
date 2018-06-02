@@ -36,11 +36,15 @@ public class AddEvent extends Option
 		    {
 		    	String name = textFieldName.getText();
 		    	String place = textFieldPlace.getText();
-		    	LocalDate startDate = LocalDate.ofInstant(((Date)startDateSpinner.getValue()).toInstant(), ZoneId.systemDefault());
-		    	LocalTime startTime = LocalTime.ofInstant(((Date)startTimeSpinner.getValue()).toInstant(), ZoneId.systemDefault());
+		    	/*
+		    	LocalDateTime startDate = LocalDateTime.ofInstant(((Date)startDateSpinner.getValue()).toInstant(), ZoneId.systemDefault());
+		    	LocalDateTime startTime = LocalDateTime.ofInstant(((Date)startTimeSpinner.getValue()).toInstant(), ZoneId.systemDefault());
+		    	*/
+		    	LocalDate startDate = ((Date)startDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		    	LocalTime startTime = ((Date)startTimeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
 		    	LocalDateTime startOfEvent = LocalDateTime.of(startDate, startTime);
-		    	LocalDate endDate = LocalDate.ofInstant(((Date)endDateSpinner.getValue()).toInstant(), ZoneId.systemDefault());
-		    	LocalTime endTime = LocalTime.ofInstant(((Date)endTimeSpinner.getValue()).toInstant(), ZoneId.systemDefault());
+		    	LocalDate endDate = ((Date)endDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		    	LocalTime endTime = ((Date)endTimeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
 		    	LocalDateTime endOfEvent = LocalDateTime.of(endDate, endTime);
 		    	String description = textDescription.getText();
 		    	boolean ifAdded = calendarEventContext.addEvent(new CalendarEvent(name, place, startOfEvent, endOfEvent, description));
