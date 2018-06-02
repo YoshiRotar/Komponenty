@@ -20,9 +20,9 @@ public class EditEvent extends Option
 		//Uzupelnienie pol wartosciami
 	}
 	
-	EditEvent(CalendarEventContext calendarEventContext)
+	EditEvent(CalendarEventContext calendarEventContext, MainWindow mainWindow)
 	{
-		super(calendarEventContext);
+		super(calendarEventContext, mainWindow);
 		initValues();
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
@@ -34,6 +34,8 @@ public class EditEvent extends Option
 		    public void actionPerformed(ActionEvent event) 
 		    {
 		    	//dodawanie
+		    	mainWindow.printCalendar();
+		    	mainWindow.printEvents();
 				dispose();
 		    }
 		});

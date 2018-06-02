@@ -27,7 +27,7 @@ import calendarlogic.CalendarEventContext;
 @SuppressWarnings("serial")
 public class Option extends JFrame
 {
-
+	protected MainWindow mainWindow;
 	protected CalendarEventContext calendarEventContext;
 	protected JPanel contentPane;
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -173,8 +173,10 @@ public class Option extends JFrame
 		for(Component c : alarmDatePanel.getComponents()) c.setEnabled(false);
 	}
 	
-	public Option(CalendarEventContext calendarEventContext)
+	public Option(CalendarEventContext calendarEventContext, MainWindow mainWindow)
 	{
+		this.mainWindow=mainWindow;
+		
 		setSize(300,600);
 		this.calendarEventContext = calendarEventContext;
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);

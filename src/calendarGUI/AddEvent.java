@@ -21,9 +21,10 @@ import calendarlogic.CalendarEventContext;
 @SuppressWarnings("serial")
 public class AddEvent extends Option
 {
-	AddEvent(CalendarEventContext calendarEventContext)
+	
+	AddEvent(CalendarEventContext calendarEventContext, MainWindow mainWindow)
 	{
-		super(calendarEventContext);
+		super(calendarEventContext, mainWindow);
 		
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
@@ -50,6 +51,8 @@ public class AddEvent extends Option
 		    	boolean ifAdded = calendarEventContext.addEvent(new CalendarEvent(name, place, startOfEvent, endOfEvent, description));
 		    	if(ifAdded) JOptionPane.showMessageDialog(null,"Wydarzenie utworzone");
 		    	else JOptionPane.showMessageDialog(null,"Nie udało się utworzyć wydarzenia","Błąd",JOptionPane.ERROR_MESSAGE);
+		    	mainWindow.printCalendar();
+		    	mainWindow.printEvents();
 				dispose();
 		    }
 		});

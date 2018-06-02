@@ -341,12 +341,14 @@ public class MainWindow extends JFrame
 		contentPane.add(options, BorderLayout.NORTH);
 		options.setPreferredSize(new Dimension(100,55));
 		JButton newEvent = new JButton("Dodaj Wydarzenie");
+		
+		MainWindow thisWindow = this;
 		newEvent.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
 				@SuppressWarnings("unused")
-				AddEvent add = new AddEvent(calendarEventContext);
+				AddEvent add = new AddEvent(calendarEventContext, thisWindow);
 			}
 		});
 		newEvent.setPreferredSize(buttonSize);
@@ -368,7 +370,7 @@ public class MainWindow extends JFrame
 			public void actionPerformed(ActionEvent ae) 
 			{
 				@SuppressWarnings("unused")
-				EditEvent add = new EditEvent(calendarEventContext);
+				EditEvent add = new EditEvent(calendarEventContext, thisWindow);
 			}
 		});
 		editEvent.setPreferredSize(buttonSize);
