@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import calendardata.CalendarEvent;
 import calendarlogic.CalendarEventContext;
 import calendarlogic.DatabaseProvider;
 
@@ -28,20 +29,24 @@ import javax.swing.JMenuItem;
 import javax.swing.BoxLayout;
 
 @SuppressWarnings("serial")
-public class MainWindow extends JFrame {
+public class MainWindow extends JFrame 
+{
 	
 	private final CalendarEventContext calendarEventContext = new CalendarEventContext();
 	private int month = Calendar.getInstance().get(Calendar.MONTH);
-	private int year = Calendar.getInstance().get(Calendar.YEAR);;
-	private int currentDay = 0;
+	private int year = Calendar.getInstance().get(Calendar.YEAR);
 	private JPanel contentPane;
-	private JScrollPane scrollPane;
+	private JPanel eventsPanel;
+	private JLabel eventsLabel = new JLabel();
+	private JPanel scrollingEventPanel = new JPanel();
+	private JScrollPane scrollPane = new JScrollPane(scrollingEventPanel);
 	private JLabel date = new JLabel("", SwingConstants.CENTER);
 	private JButton[] days = new JButton[42];
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	private JButton buttonSelected;
 	private int selectedMonth;
 	private int selectedYear;
+	private JButton selectedEvent;
 	
 	public int getMonth() 
 	{
@@ -62,16 +67,6 @@ public class MainWindow extends JFrame {
 	{
 		this.year = year;
 	}
-	
-	public int getCurrentDay() 
-	{
-		return currentDay;
-	}
-	
-	public void setCurrentDay(int currentDay) 
-	{
-		this.currentDay = currentDay;
-	}
 
 	public static void main(String[] args) 
 	{
@@ -79,6 +74,45 @@ public class MainWindow extends JFrame {
 		frame.printCalendar();
 		frame.setVisible(true);
 	}	
+	
+	public void printEvents()
+	{
+		if(buttonSelected==null) return;
+		selectedEvent=null;
+		eventsLabel.setText("Wydarzenia z dnia: "+ buttonSelected.getText() + " " +date.getText());
+		int day = Integer.parseInt(buttonSelected.getText());
+		
+		scrollingEventPanel.removeAll();
+		for(CalendarEvent calendarEvent : calendarEventContext.getEventsFromCertainDay(LocalDate.of(selectedYear, selectedMonth+1, day)))
+		{
+			/*
+			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +"Miejsce: " + calendarEvent.getPlace()+ "<br>" +
+						  "Czas: " +  calendarEvent.getStartOfEvent().getHour() + ":" + calendarEvent.getStartOfEvent().getMinute() + "<br>" +
+						  "Zakoñczenie; " + calendarEvent.getEndOfEvent().toString() + "<br>" +
+						  "Opis: " + calendarEvent.getDescription() + "</html>";
+						  */
+			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +
+						  "Miejsce: " + calendarEvent.getPlace()+ "<br>" +
+						  "Czas: " +  calendarEvent.getStartOfEvent().getHour() + ":" +
+						  calendarEvent.getStartOfEvent().getMinute() + "<br>" + "</html>";
+ 			JButton button = new JButton(text);
+ 			button.setHorizontalAlignment(SwingConstants.LEFT);
+			button.setPreferredSize(new Dimension(370,60));
+			button.setBackground(Color.WHITE);
+			button.addActionListener(new ActionListener() 
+			{
+				public void actionPerformed(ActionEvent ae) 
+				{
+					if(selectedEvent!=null) selectedEvent.setBackground(Color.WHITE);
+					selectedEvent = (JButton) ae.getSource();
+					selectedEvent.setBackground(Color.LIGHT_GRAY);
+				}
+			});
+			scrollingEventPanel.add(button, null);
+		}
+
+		scrollingEventPanel.repaint();
+	}
 	
 	public void initCalendarPanel(JPanel parent)
 	{
@@ -101,13 +135,12 @@ public class MainWindow extends JFrame {
 				{
 					if(((JButton)ae.getSource()).getText()!="")
 					{
-						int currentDay = Integer.parseInt(((JButton)ae.getSource()).getText());
-						scrollPane.setViewportView(new JLabel(currentDay+", "+date.getText(), SwingConstants.CENTER));
 						if(buttonSelected!=null) buttonSelected.setBackground(Color.WHITE);
 						buttonSelected = (JButton)ae.getSource();
 						selectedMonth = month;
 						selectedYear = year;
 						printCalendar();
+						printEvents();
 					}
 					
 				}
@@ -170,9 +203,11 @@ public class MainWindow extends JFrame {
 		 dayOfWeek--;
 		 if(dayOfWeek==0) dayOfWeek = 7;
 		 int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		 
+		 //na razie tylko tak prowizorycznie, fajnie byloby to dac w jedna petle
+		 for(int i=0; i<days.length; i++) days[i].setBackground(Color.WHITE);
 		 for(int i=0; i<daysInMonth; i++)
 		 {
-			 days[i+dayOfWeek-1].setBackground(Color.WHITE);
 			 days[i+dayOfWeek-1].setText(Integer.toString(i+1));
 			 if(!this.calendarEventContext.getEventsFromCertainDay(LocalDate.of(this.year, this.month+1, i+1)).isEmpty()) days[i+dayOfWeek-1].setBackground(Color.GREEN);
 		 }
@@ -180,7 +215,8 @@ public class MainWindow extends JFrame {
 		 if(buttonSelected!=null && month==selectedMonth && year==selectedYear) buttonSelected.setBackground(Color.LIGHT_GRAY);
 	 }
 	
-	public MainWindow() {
+	public MainWindow() 
+	{
 		
 		super("Turbo Calendar 0.3");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -274,10 +310,17 @@ public class MainWindow extends JFrame {
 		
 		
 		//Wydarzenia
-		scrollPane = new JScrollPane();
-		scrollPane.setPreferredSize(new Dimension(400,100));
-		contentPane.add(scrollPane, BorderLayout.EAST);
-		scrollPane.setViewportView(new JLabel("Wydarzenia: ", SwingConstants.CENTER));
+		eventsPanel = new JPanel();
+		eventsPanel.setPreferredSize(new Dimension(400,100));
+
+		eventsLabel.setText("Wydarzenia:");
+		eventsPanel.add(eventsLabel);
+		scrollPane.setPreferredSize(new Dimension(400,500));
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollingEventPanel.setLayout(new BoxLayout(scrollingEventPanel, BoxLayout.Y_AXIS));
+		eventsPanel.add(scrollPane);
+		contentPane.add(eventsPanel, BorderLayout.EAST);
 		
 		
 		//Kalendarz
@@ -331,9 +374,19 @@ public class MainWindow extends JFrame {
 			{
 				month = Calendar.getInstance().get(Calendar.MONTH);
 				year = Calendar.getInstance().get(Calendar.YEAR);
-				currentDay = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+				Integer day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 				printCalendar();
-				scrollPane.setViewportView(new JLabel(currentDay+", "+date.getText(), SwingConstants.CENTER));
+				for(JButton button : days)
+				{
+					if(button.getText().equals(day.toString())) 
+					{
+						buttonSelected=button;
+						selectedMonth=month;
+						selectedYear=year;
+					}
+				}
+				printCalendar();
+				printEvents();
 			}
 		});
 		toCurrentDay.setPreferredSize(buttonSize);
