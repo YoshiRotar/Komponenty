@@ -21,9 +21,9 @@ import calendarlogic.CalendarEventContext;
 @SuppressWarnings("serial")
 public class AddEvent extends Option
 {
-	AddEvent(CalendarEventContext calendarEventContext)
+	AddEvent(CalendarEventContext calendarEventContext, LocalDate selectedDate)
 	{
-		super(calendarEventContext);
+		super(calendarEventContext, selectedDate);
 		
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(JLabel.LEFT_ALIGNMENT);

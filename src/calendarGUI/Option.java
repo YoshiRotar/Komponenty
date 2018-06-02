@@ -5,7 +5,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -34,18 +37,19 @@ public class Option extends JFrame
 	protected JTextField textFieldName;
 	protected JTextField textFieldPlace;
 	protected JTextArea textDescription;
-	protected SpinnerModel timeModel1 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
-	protected SpinnerModel timeModel2 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
-	protected SpinnerModel timeModel3 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
-	protected SpinnerModel dateModel1 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.YEAR);
-	protected SpinnerModel dateModel2 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.YEAR);
-	protected SpinnerModel dateModel3 = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.YEAR);
-	protected JSpinner startTimeSpinner = new JSpinner(timeModel1);
-	protected JSpinner endTimeSpinner = new JSpinner(timeModel2);
-	protected JSpinner startDateSpinner = new JSpinner(dateModel1);
-	protected JSpinner endDateSpinner = new JSpinner(dateModel2);
-	protected JSpinner dateAlarmSpinner = new JSpinner(dateModel3);
-	protected JSpinner timeAlarmSpinner = new JSpinner(timeModel3);
+	protected SpinnerModel startTimeSpinnerModel = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
+	protected SpinnerModel endTimeSpinnerModel = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
+	protected SpinnerModel timeAlarmSpinnerModel = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
+	protected SpinnerModel startDateSpinnerModel;
+	protected SpinnerModel endDateSpinnerModel;
+	protected SpinnerModel dateAlarmSpinnerModel;
+	protected JSpinner startTimeSpinner = new JSpinner(startTimeSpinnerModel);
+	protected JSpinner endTimeSpinner = new JSpinner(endTimeSpinnerModel);
+	protected JSpinner timeAlarmSpinner = new JSpinner(timeAlarmSpinnerModel);
+	protected JSpinner startDateSpinner;
+	protected JSpinner endDateSpinner;
+	protected JSpinner dateAlarmSpinner;
+	
 	
 
 	protected void addName()
@@ -173,8 +177,15 @@ public class Option extends JFrame
 		for(Component c : alarmDatePanel.getComponents()) c.setEnabled(false);
 	}
 	
-	public Option(CalendarEventContext calendarEventContext)
+	public Option(CalendarEventContext calendarEventContext, LocalDate selectedDate)
 	{
+		startDateSpinnerModel = new SpinnerDateModel(Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.YEAR);
+		endDateSpinnerModel = new SpinnerDateModel(Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.YEAR);
+		dateAlarmSpinnerModel = new SpinnerDateModel(Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.YEAR);
+		startDateSpinner = new JSpinner(startDateSpinnerModel);
+		endDateSpinner = new JSpinner(endDateSpinnerModel);
+		dateAlarmSpinner = new JSpinner(dateAlarmSpinnerModel);
+		
 		setSize(300,600);
 		this.calendarEventContext = calendarEventContext;
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);

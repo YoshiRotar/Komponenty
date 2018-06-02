@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -20,9 +21,9 @@ public class EditEvent extends Option
 		//Uzupelnienie pol wartosciami
 	}
 	
-	EditEvent(CalendarEventContext calendarEventContext)
+	EditEvent(CalendarEventContext calendarEventContext, LocalDate selectedDate)
 	{
-		super(calendarEventContext);
+		super(calendarEventContext, selectedDate);
 		initValues();
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(JLabel.LEFT_ALIGNMENT);

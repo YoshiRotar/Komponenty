@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -49,6 +50,16 @@ public class MainWindow extends JFrame
 	private JButton selectedEvent;
 	private JButton editEvent;
 	private JButton deleteEvent;
+	
+	public MainWindow getMainWindow()
+	{
+		return this;
+	}
+	
+	public CalendarEventContext getCalendarEventContext()
+	{
+		return calendarEventContext;
+	}
 	
 	public int getMonth() 
 	{
@@ -92,7 +103,7 @@ public class MainWindow extends JFrame
 			/*
 			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +"Miejsce: " + calendarEvent.getPlace()+ "<br>" +
 						  "Czas: " +  calendarEvent.getStartOfEvent().getHour() + ":" + calendarEvent.getStartOfEvent().getMinute() + "<br>" +
-						  "Zakoñczenie; " + calendarEvent.getEndOfEvent().toString() + "<br>" +
+						  "Zakoï¿½czenie; " + calendarEvent.getEndOfEvent().toString() + "<br>" +
 						  "Opis: " + calendarEvent.getDescription() + "</html>";
 						  */
 			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +
@@ -134,7 +145,7 @@ public class MainWindow extends JFrame
 			 days[i] = new JButton();
 			 days[i].setPreferredSize(new Dimension(120, 50));
 			 days[i].setFocusPainted(false);
-			 days[i].setBackground(Color.white);
+			 days[i].setBackground(Color.WHITE);
 			 days[i].addActionListener(new ActionListener() 
 			 {
 				public void actionPerformed(ActionEvent ae) 
@@ -281,6 +292,14 @@ public class MainWindow extends JFrame
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmUsuWydarzeniaStarsza = new JMenuItem("UsuÅ„ wydarzenia starsze od...");
+		mntmUsuWydarzeniaStarsza.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent ae) 
+			{
+				@SuppressWarnings("unused")
+				EraseOlderThan eraseOlderThan = new EraseOlderThan(getMainWindow());
+			}
+		});
 		mnNewMenu.add(mntmUsuWydarzeniaStarsza);
 		
 		JMenuItem mntmFiltruj = new JMenuItem("Filtruj");
@@ -345,8 +364,18 @@ public class MainWindow extends JFrame
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
-				@SuppressWarnings("unused")
-				AddEvent add = new AddEvent(calendarEventContext);
+				if(buttonSelected != null) 
+				{
+					int selectedDay = Integer.parseInt(buttonSelected.getText());
+					@SuppressWarnings("unused")
+					AddEvent add = new AddEvent(calendarEventContext, LocalDate.of(selectedYear, selectedMonth+1, selectedDay));
+				}
+				else 
+				{
+					@SuppressWarnings("unused")
+					AddEvent add = new AddEvent(calendarEventContext, Calendar.getInstance().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+				}
+				
 			}
 		});
 		newEvent.setPreferredSize(buttonSize);
@@ -367,8 +396,17 @@ public class MainWindow extends JFrame
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
-				@SuppressWarnings("unused")
-				EditEvent add = new EditEvent(calendarEventContext);
+				if(buttonSelected != null) 
+				{
+					int selectedDay = Integer.parseInt(buttonSelected.getText());
+					@SuppressWarnings("unused")
+					AddEvent add = new AddEvent(calendarEventContext, LocalDate.of(selectedYear, selectedMonth+1, selectedDay));
+				}
+				else 
+				{
+					@SuppressWarnings("unused")
+					AddEvent add = new AddEvent(calendarEventContext, Calendar.getInstance().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+				}
 			}
 		});
 		editEvent.setPreferredSize(buttonSize);

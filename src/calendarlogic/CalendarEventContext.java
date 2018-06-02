@@ -8,6 +8,7 @@ import calendardata.CalendarEvent;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class CalendarEventContext 
 {
@@ -21,6 +22,10 @@ public class CalendarEventContext
 	public boolean addEvent(CalendarEvent newEvent)
 	{
 		if(newEvent.getName() == null || newEvent.getStartOfEvent() == null)
+		{
+			return false;
+		}
+		else if (newEvent.getStartOfEvent().isAfter(newEvent.getEndOfEvent()))
 		{
 			return false;
 		}
@@ -76,5 +81,18 @@ public class CalendarEventContext
     	event.setEndOfEvent(endOfEvent);
     	event.setDescription(description);
     	return true;
+    }
+    
+    public int eraseOlderThan(LocalDate date)
+    {
+    	int elements = 0;
+    	LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.MIDNIGHT);
+    	CalendarEvent temp = new CalendarEvent(null, null, dateTime, null, null);
+    	while (this.calendarEvents.lower(temp) != null)
+    	{
+    		this.calendarEvents.remove(this.calendarEvents.lower(temp));
+    		elements++;
+    	}
+		return elements;
     }
 }
