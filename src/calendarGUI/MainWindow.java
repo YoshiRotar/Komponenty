@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -51,11 +50,6 @@ public class MainWindow extends JFrame
 	private JButton editEvent;
 	private JButton deleteEvent;
 	
-	public MainWindow getMainWindow()
-	{
-		return this;
-	}
-	
 	public CalendarEventContext getCalendarEventContext()
 	{
 		return calendarEventContext;
@@ -80,6 +74,11 @@ public class MainWindow extends JFrame
 	{
 		this.year = year;
 	}
+	
+	public int getDay()
+	{
+		return Integer.parseInt(this.buttonSelected.getText());
+	}
 
 	public static void main(String[] args) 
 	{
@@ -103,7 +102,7 @@ public class MainWindow extends JFrame
 			/*
 			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +"Miejsce: " + calendarEvent.getPlace()+ "<br>" +
 						  "Czas: " +  calendarEvent.getStartOfEvent().getHour() + ":" + calendarEvent.getStartOfEvent().getMinute() + "<br>" +
-						  "Zako�czenie; " + calendarEvent.getEndOfEvent().toString() + "<br>" +
+						  "Zako?czenie; " + calendarEvent.getEndOfEvent().toString() + "<br>" +
 						  "Opis: " + calendarEvent.getDescription() + "</html>";
 						  */
 			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +
@@ -236,6 +235,7 @@ public class MainWindow extends JFrame
 	{
 		
 		super("Turbo Calendar 0.3");
+		MainWindow thisWindow = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1280,720);
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
@@ -291,13 +291,13 @@ public class MainWindow extends JFrame
 		JMenu mnNewMenu = new JMenu("Edycja");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmUsuWydarzeniaStarsza = new JMenuItem("Usuń wydarzenia starsze od...");
+		JMenuItem mntmUsuWydarzeniaStarsza = new JMenuItem("Usu� wydarzenia starsze od...");
 		mntmUsuWydarzeniaStarsza.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
 				@SuppressWarnings("unused")
-				EraseOlderThan eraseOlderThan = new EraseOlderThan(getMainWindow());
+				EraseOlderThan eraseOlderThan = new EraseOlderThan(thisWindow);
 			}
 		});
 		mnNewMenu.add(mntmUsuWydarzeniaStarsza);
@@ -360,27 +360,20 @@ public class MainWindow extends JFrame
 		contentPane.add(options, BorderLayout.NORTH);
 		options.setPreferredSize(new Dimension(100,55));
 		JButton newEvent = new JButton("Dodaj Wydarzenie");
+		
+		
 		newEvent.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
-				if(buttonSelected != null) 
-				{
-					int selectedDay = Integer.parseInt(buttonSelected.getText());
-					@SuppressWarnings("unused")
-					AddEvent add = new AddEvent(calendarEventContext, LocalDate.of(selectedYear, selectedMonth+1, selectedDay));
-				}
-				else 
-				{
-					@SuppressWarnings("unused")
-					AddEvent add = new AddEvent(calendarEventContext, Calendar.getInstance().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-				}
-				
+				@SuppressWarnings("unused")
+				AddEvent add = new AddEvent(calendarEventContext, thisWindow);
 			}
 		});
 		newEvent.setPreferredSize(buttonSize);
 		
-		deleteEvent = new JButton("Usuń Wydarzenie");
+
+		deleteEvent = new JButton("Usu� Wydarzenie");
 		deleteEvent.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
@@ -396,22 +389,13 @@ public class MainWindow extends JFrame
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
-				if(buttonSelected != null) 
-				{
-					int selectedDay = Integer.parseInt(buttonSelected.getText());
-					@SuppressWarnings("unused")
-					AddEvent add = new AddEvent(calendarEventContext, LocalDate.of(selectedYear, selectedMonth+1, selectedDay));
-				}
-				else 
-				{
-					@SuppressWarnings("unused")
-					AddEvent add = new AddEvent(calendarEventContext, Calendar.getInstance().getTime().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-				}
+				@SuppressWarnings("unused")
+				EditEvent add = new EditEvent(calendarEventContext, thisWindow);
 			}
 		});
 		editEvent.setPreferredSize(buttonSize);
 		
-		JButton toCurrentDay = new JButton("Bieżący Dzień");
+		JButton toCurrentDay = new JButton("Bie��cy Dzie�");
 		toCurrentDay.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 

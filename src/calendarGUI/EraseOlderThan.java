@@ -73,6 +73,7 @@ public class EraseOlderThan extends JFrame
 	            	int counter = calendarEventContext.eraseOlderThan(referenceDate);
 	            	JOptionPane.showMessageDialog(null,"Usunięto " +  counter + " wpisów");
 	            	source.printCalendar();
+	            	source.printEvents();
 	            	dispose();
 	            }
 			}

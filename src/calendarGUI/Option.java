@@ -30,7 +30,7 @@ import calendarlogic.CalendarEventContext;
 @SuppressWarnings("serial")
 public class Option extends JFrame
 {
-
+	protected MainWindow mainWindow;
 	protected CalendarEventContext calendarEventContext;
 	protected JPanel contentPane;
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -177,11 +177,13 @@ public class Option extends JFrame
 		for(Component c : alarmDatePanel.getComponents()) c.setEnabled(false);
 	}
 	
-	public Option(CalendarEventContext calendarEventContext, LocalDate selectedDate)
+	public Option(CalendarEventContext calendarEventContext, MainWindow mainWindow)
 	{
-		startDateSpinnerModel = new SpinnerDateModel(Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.YEAR);
-		endDateSpinnerModel = new SpinnerDateModel(Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.YEAR);
-		dateAlarmSpinnerModel = new SpinnerDateModel(Date.from(selectedDate.atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.YEAR);
+		LocalDate date = LocalDate.of(mainWindow.getYear(), mainWindow.getMonth()+1, mainWindow.getDay());
+		
+		startDateSpinnerModel = new SpinnerDateModel(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.YEAR);
+		endDateSpinnerModel = new SpinnerDateModel(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.YEAR);
+		dateAlarmSpinnerModel = new SpinnerDateModel(Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant()), null, null, Calendar.YEAR);
 		startDateSpinner = new JSpinner(startDateSpinnerModel);
 		endDateSpinner = new JSpinner(endDateSpinnerModel);
 		dateAlarmSpinner = new JSpinner(dateAlarmSpinnerModel);
