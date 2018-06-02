@@ -6,19 +6,78 @@ import java.util.TreeSet;
 
 import calendardata.CalendarEvent;
 
+import java.beans.Encoder;
+import java.beans.Expression;
+import java.beans.PersistenceDelegate;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class CalendarEventContext 
 {
+	private String xmlPath = "./data/events.xml";
 	private TreeSet<CalendarEvent> calendarEvents = new TreeSet<CalendarEvent>();
 	
 	public TreeSet<CalendarEvent> getCalendarEvents()
 	{
 		return calendarEvents;
 	}
+	
+	public void encodeToXml()
+	{
+		XMLEncoder encoder=null;
+		
+		Path path = Paths.get(xmlPath);
+		File file = path.getParent().toFile();
+		file.mkdirs();
+		try
+		{
+			encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream(xmlPath)));
+			encoder.setPersistenceDelegate(LocalDateTime.class, new PersistenceDelegate() 
+				{
+                    @Override
+                    protected Expression instantiate(Object obj, Encoder encdr) 
+                    {
+                        LocalDateTime localDateTime = (LocalDateTime) obj;
+                        return new Expression(localDateTime, LocalDateTime.class, "parse", new Object[]{localDateTime.toString()});
+                    }
+		        });
 
+			encoder.writeObject(calendarEvents);
+		}
+		catch(Exception e)
+		{
+			System.out.println("Nie uda³o siê otworzyc pliku xml");
+		}
+		encoder.close();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void decodeFromXml()
+	{
+		XMLDecoder decoder=null;
+		File file = new File(xmlPath);
+		if(!file.exists()) return;
+		try 
+		{
+			decoder = new XMLDecoder(new BufferedInputStream(new FileInputStream(xmlPath)));
+			this.calendarEvents = (TreeSet<CalendarEvent>)decoder.readObject();
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("Nie udalo sie otworzyc pliku xml");
+		}
+	}
+	
 	public boolean addEvent(CalendarEvent newEvent)
 	{
 		if(newEvent.getName() == null || newEvent.getStartOfEvent() == null)

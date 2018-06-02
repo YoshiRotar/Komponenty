@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -77,6 +79,7 @@ public class MainWindow extends JFrame
 	
 	public int getDay()
 	{
+		if(buttonSelected==null) return 1;
 		return Integer.parseInt(this.buttonSelected.getText());
 	}
 
@@ -240,6 +243,17 @@ public class MainWindow extends JFrame
 		setSize(1280,720);
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
+		
+		this.addWindowListener( new WindowAdapter()
+		{
+		   public void windowClosing(WindowEvent e)
+		   {
+		      calendarEventContext.encodeToXml();
+		      dispose();
+		   }
+		});
+		
+		calendarEventContext.decodeFromXml();
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

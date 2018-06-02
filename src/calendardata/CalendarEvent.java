@@ -19,6 +19,12 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 		this.endOfEvent = endOfEvent;
 		this.description = description;
 	}
+	
+	//do serializacji
+	public CalendarEvent()
+	{
+		
+	}
 
 	public String getName() 
 	{
