@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 import calendardata.CalendarEvent;
 import calendarlogic.CalendarEventContext;
 import calendarlogic.DatabaseProvider;
+import calendarlogic.ToIcsConverter;
 
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -328,12 +330,27 @@ public class MainWindow extends JFrame
 		mnPlik.add(mntmWczytajZXml);
 		
 		JMenuItem mntmKonwertujDo = new JMenuItem("Konwertuj do formatu standardowego");
+		mntmKonwertujDo.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				JFileChooser fileChooser = new JFileChooser();
+				contentPane.add(fileChooser);
+				fileChooser.showOpenDialog(null);
+				if(fileChooser.getSelectedFile() != null)
+				{
+					String path = fileChooser.getSelectedFile().getAbsolutePath();
+					path += ".ics";
+					ToIcsConverter.convert(calendarEventContext, path);
+				}
+			}
+		});
 		mnPlik.add(mntmKonwertujDo);
 		
 		JMenu mnNewMenu = new JMenu("Edycja");
 		menuBar.add(mnNewMenu);
 		
-		JMenuItem mntmUsuWydarzeniaStarsza = new JMenuItem("Usu� wydarzenia starsze od...");
+		JMenuItem mntmUsuWydarzeniaStarsza = new JMenuItem("Usuń wydarzenia starsze od...");
 		mntmUsuWydarzeniaStarsza.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 

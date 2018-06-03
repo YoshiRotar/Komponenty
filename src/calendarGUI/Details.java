@@ -20,7 +20,7 @@ public class Details extends JFrame
 {
 	private JPanel contentPane;
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy h:mm:ss"); 
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy H:mm:ss"); 
 	
 	Details(CalendarEvent calendarEvent)
 	{
