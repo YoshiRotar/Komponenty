@@ -420,8 +420,11 @@ public class MainWindow extends JFrame
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
-				//
-				
+				selectedEventButton = null;
+				calendarEventContext.deleteEvent(selectedEvent);
+				selectedEvent = null;
+				printCalendar();
+				printEvents();
 			}
 		});
 		deleteEvent.setPreferredSize(buttonSize);
