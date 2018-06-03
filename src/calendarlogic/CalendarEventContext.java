@@ -27,6 +27,16 @@ public class CalendarEventContext
 	private String xmlPath = "./data/events.xml";
 	private TreeSet<CalendarEvent> calendarEvents = new TreeSet<CalendarEvent>();
 	
+	public String getXmlPath() 
+	{
+		return xmlPath;
+	}
+
+	public void setXmlPath(String xmlPath) 
+	{
+		this.xmlPath = xmlPath;
+	}
+	
 	public TreeSet<CalendarEvent> getCalendarEvents()
 	{
 		return calendarEvents;

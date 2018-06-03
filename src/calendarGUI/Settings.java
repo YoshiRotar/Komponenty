@@ -1,5 +1,6 @@
 package calendarGUI;
 
+import java.awt.BorderLayout;
 import java.awt.Choice;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -8,12 +9,15 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
@@ -22,45 +26,98 @@ public class Settings extends JFrame
 
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	private JPanel contentPane;
+	private MainWindow mainWindow;
 	
-	Settings()
+	Settings(MainWindow mainWindow)
 	{
-		setSize(200,200);
+		this.mainWindow = mainWindow;
+		setSize(275,175);
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new GridLayout(3,1));
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		setContentPane(contentPane);
 		setVisible(true);
 		
-		JPanel stylePanel = new JPanel(new FlowLayout());
+		JPanel stylePanel = new JPanel(new BorderLayout());
 		JLabel style = new JLabel("Styl: ");
+		style.setPreferredSize(new Dimension(100,50));
 		JRadioButton dark = new JRadioButton("Ciemny");
 		JRadioButton light = new JRadioButton("Jasny");
 		ButtonGroup styleGroup = new ButtonGroup();
 		styleGroup.add(light);
 		styleGroup.add(dark);
-		stylePanel.add(style);
-		stylePanel.add(dark);
-		stylePanel.add(light);
+		stylePanel.add(style, BorderLayout.WEST);
+		JPanel styleOptions = new JPanel();
+		styleOptions.setLayout(new BoxLayout(styleOptions, BoxLayout.X_AXIS));
+		styleOptions.setPreferredSize(new Dimension(150,50));
+		styleOptions.add(dark);
+		styleOptions.add(light);
+		stylePanel.add(styleOptions, BorderLayout.EAST);
 		contentPane.add(stylePanel);
 		
-		JPanel languagePanel = new JPanel(new FlowLayout());
+		JPanel languagePanel = new JPanel(new BorderLayout());
+		JLabel lang = new JLabel("Jêzyk: ");
+		lang.setPreferredSize(new Dimension(100,50));
+		languagePanel.add(lang, BorderLayout.WEST);
+		JPanel langOptions = new JPanel();
+		langOptions.setPreferredSize(new Dimension(150,50));
+		langOptions.setLayout(new BoxLayout(langOptions, BoxLayout.X_AXIS));
+		languagePanel.add(langOptions, BorderLayout.EAST);
+		
 		Choice languageChoice = new Choice();
+		languageChoice.setMaximumSize(new Dimension(100, 50));
 		languageChoice.add("polski");
 		languageChoice.add("angielski");
-		languagePanel.add(languageChoice);
+		langOptions.add(languageChoice);
+		
 		contentPane.add(languagePanel);
 		
+		/*
+		JPanel pathPanel = new JPanel(new BorderLayout());
+		pathPanel.setPreferredSize(new Dimension(250,20));
+		JLabel path = new JLabel("Œcie¿ka xml: ");
+		path.setPreferredSize(new Dimension(100,50));
+		pathPanel.add(path, BorderLayout.WEST);
+		JPanel pathOptions = new JPanel();
+		pathOptions.setPreferredSize(new Dimension(150,20));
+		pathOptions.setLayout(new BoxLayout(pathOptions, BoxLayout.X_AXIS));
+		pathPanel.add(pathOptions, BorderLayout.EAST);
+		
+		JFileChooser chooser = new JFileChooser();
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		JButton pathButton = new JButton("...");
+		JTextField pathText = new JTextField();
+		pathText.setPreferredSize(new Dimension(75,10));
+		pathText.setText(mainWindow.getCalendarEventContext().getXmlPath());
+		pathButton.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent ae) 
+			{
+				int result = chooser.showOpenDialog(pathPanel);
+				if (result == JFileChooser.APPROVE_OPTION) 
+				{
+				    pathText.setText(chooser.getSelectedFile().toString()+"events.xml");
+				}
+				
+			}
+		});
+		
+		pathOptions.add(pathText);
+		pathOptions.add(pathButton);
+		contentPane.add(pathPanel);
+		*/
 		JPanel okPanel = new JPanel(new FlowLayout());
 		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
-				dispose();
+				//inne ustawienia
+				//mainWindow.getCalendarEventContext().setXmlPath(pathText.getText());
 				
+				dispose();
 			}
 		});
 		okPanel.add(ok);
