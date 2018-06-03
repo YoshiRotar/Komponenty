@@ -2,13 +2,15 @@ package calendarGUI;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import calendardata.CalendarEvent;
@@ -16,10 +18,9 @@ import calendardata.CalendarEvent;
 @SuppressWarnings("serial")
 public class Details extends JFrame
 {
-
-
 	private JPanel contentPane;
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy h:mm:ss"); 
 	
 	Details(CalendarEvent calendarEvent)
 	{
@@ -36,9 +37,9 @@ public class Details extends JFrame
 		name.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		JLabel place = new JLabel("Miejsce: " + calendarEvent.getPlace());
 		place.setAlignmentX(JLabel.LEFT_ALIGNMENT);	
-		JLabel start = new JLabel("Rozpoczêcie: " + calendarEvent.getStartOfEvent().toString());
+		JLabel start = new JLabel("RozpoczÄ™cie: " + dateFormat.format(Date.from(calendarEvent.getStartOfEvent().atZone(ZoneId.systemDefault()).toInstant())));
 		start.setAlignmentX(JLabel.LEFT_ALIGNMENT);	
-		JLabel end = new JLabel("Zakoñczenie: " + calendarEvent.getEndOfEvent().toString());
+		JLabel end = new JLabel("ZakoÅ„czenie: " + dateFormat.format(Date.from(calendarEvent.getEndOfEvent().atZone(ZoneId.systemDefault()).toInstant())));
 		end.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		JLabel description = new JLabel("Opis: ");
 		description.setAlignmentX(JLabel.LEFT_ALIGNMENT);

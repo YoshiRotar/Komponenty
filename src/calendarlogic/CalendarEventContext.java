@@ -66,7 +66,7 @@ public class CalendarEventContext
 		}
 		catch(Exception e)
 		{
-			System.out.println("Nie uda³o siê otworzyc pliku xml");
+			System.out.println("Nie udaÅ‚o siÄ™ otworzyc pliku xml");
 		}
 		encoder.close();
 	}
@@ -90,7 +90,7 @@ public class CalendarEventContext
 	
 	public boolean addEvent(CalendarEvent newEvent)
 	{
-		if(newEvent.getName() == null || newEvent.getStartOfEvent() == null)
+		if(newEvent.getName().equals("") || newEvent.getStartOfEvent() == null)
 		{
 			return false;
 		}
@@ -98,15 +98,15 @@ public class CalendarEventContext
 		{
 			return false;
 		}
-		else if(calendarEvents.lower(newEvent) == null)
+		else if(calendarEvents.isEmpty())
 		{
 			return calendarEvents.add(newEvent);
 		}
-		else if (calendarEvents.floor(newEvent).compareTo(newEvent) == 0)
+		else if ((calendarEvents.floor(newEvent) != null && calendarEvents.floor(newEvent).compareTo(newEvent) == 0))
 		{
 			return false;
 		}
-		else if (calendarEvents.floor(newEvent).getEndOfEvent().isBefore(newEvent.getStartOfEvent()))
+		else if ((calendarEvents.lower(newEvent) == null || calendarEvents.lower(newEvent).getEndOfEvent().isBefore(newEvent.getStartOfEvent())) && (calendarEvents.higher(newEvent) == null || calendarEvents.higher(newEvent).getStartOfEvent().isAfter(newEvent.getEndOfEvent())))
 		{
 			return calendarEvents.add(newEvent);
 		}
