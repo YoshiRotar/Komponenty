@@ -354,7 +354,7 @@ public class MainWindow extends JFrame
 			public void actionPerformed(ActionEvent ae) 
 			{
 				@SuppressWarnings("unused")
-				Settings settings = new Settings();
+				Settings settings = new Settings(thisWindow);
 			}
 		});
 		mnNewMenu.add(mntmUstawienia);
