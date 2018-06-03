@@ -22,6 +22,12 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 		this.buzzer = buzzer;
 	}
 	
+	//do serializacji
+	public CalendarEvent()
+	{
+		
+	}
+	
 	public LocalDateTime getBuzzer() 
 	{
 		return buzzer;
@@ -30,12 +36,6 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 	public void setBuzzer(LocalDateTime buzzer) 
 	{
 		this.buzzer = buzzer;
-	}
-
-	//do serializacji
-	public CalendarEvent()
-	{
-		
 	}
 
 	public String getName() 

@@ -457,7 +457,7 @@ public class MainWindow extends JFrame
 		});
 		editEvent.setPreferredSize(buttonSize);
 		
-		JButton toCurrentDay = new JButton("Bie��cy Dzie�");
+		JButton toCurrentDay = new JButton("Bieżący Dzień");
 		toCurrentDay.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 

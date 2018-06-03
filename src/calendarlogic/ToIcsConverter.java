@@ -20,8 +20,6 @@ public class ToIcsConverter
 		{
 			writer = new PrintWriter(path, "UTF-8");
 			writer.println("BEGIN:VCALENDAR");
-			//writer.println("PRODID:-//Microsoft Corporation//Outlook 12.0 MIMEDIR//EN");
-			//writer.println("VERSION:2.0");
 			
 			for(CalendarEvent calendarEvent : calendarEventContext.getCalendarEvents())
 			{
@@ -33,14 +31,15 @@ public class ToIcsConverter
 				writer.println("DTEND:" + dateFormat.format(Date.from(calendarEvent.getEndOfEvent().atZone(ZoneId.systemDefault()).toInstant())));
 				writer.println("DESCRIPTION:" + calendarEvent.getDescription());
 				
-//				if(ma brzęczyk)
-//				{
-//					writer.println("BEGIN:VALARM");
-//					
-//					do alarmu
-//					
-//					writer.println("END:VALARM");
-//				}
+				if(calendarEvent.getBuzzer() != null)
+				{
+					writer.println("BEGIN:VALARM");		
+					
+					writer.println("TRIGGER;VALUE=DATE-TIME:" + dateFormat.format(Date.from(calendarEvent.getBuzzer().atZone(ZoneId.systemDefault()).toInstant())));
+					writer.println("ACTION:DISPLAY");
+					
+					writer.println("END:VALARM");
+				}
 				
 				writer.println("END:VEVENT");
 			}
