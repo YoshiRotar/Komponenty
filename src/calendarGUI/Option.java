@@ -49,6 +49,7 @@ public class Option extends JFrame
 	protected JSpinner startDateSpinner;
 	protected JSpinner endDateSpinner;
 	protected JSpinner dateAlarmSpinner;
+	protected JCheckBox alarmCheckBox;
 	
 	
 
@@ -138,7 +139,7 @@ public class Option extends JFrame
 		label_4.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		alarmPanel.add(label_4);
 		
-		JCheckBox alarmCheckBox = new JCheckBox();
+		alarmCheckBox = new JCheckBox();
 		alarmCheckBox.addActionListener(new ActionListener() 
 		{
 		    public void actionPerformed(ActionEvent event) 

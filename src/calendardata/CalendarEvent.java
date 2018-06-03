@@ -9,8 +9,9 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 	LocalDateTime startOfEvent;
 	LocalDateTime endOfEvent;
 	String description;
+	LocalDateTime buzzer;
 	
-	public CalendarEvent(String name, String place, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description) 
+	public CalendarEvent(String name, String place, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description, LocalDateTime buzzer) 
 	{
 		super();
 		this.name = name;
@@ -18,8 +19,19 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 		this.startOfEvent = startOfEvent;
 		this.endOfEvent = endOfEvent;
 		this.description = description;
+		this.buzzer = buzzer;
 	}
 	
+	public LocalDateTime getBuzzer() 
+	{
+		return buzzer;
+	}
+
+	public void setBuzzer(LocalDateTime buzzer) 
+	{
+		this.buzzer = buzzer;
+	}
+
 	//do serializacji
 	public CalendarEvent()
 	{

@@ -98,6 +98,14 @@ public class CalendarEventContext
 		{
 			return false;
 		}
+		else if (newEvent.getBuzzer()!=null && newEvent.getBuzzer().isAfter(newEvent.getStartOfEvent()))
+		{
+			return false;
+		}
+		else if (newEvent.getBuzzer()!=null && newEvent.getBuzzer().isBefore(LocalDateTime.now()))
+		{
+			return false;
+		}
 		else if(calendarEvents.isEmpty())
 		{
 			return calendarEvents.add(newEvent);
@@ -123,7 +131,7 @@ public class CalendarEventContext
         
     public CalendarEvent getEvent(LocalDateTime dateOfEvent)
     {
-    	CalendarEvent temp = new CalendarEvent(null, null, dateOfEvent, null, null);
+    	CalendarEvent temp = new CalendarEvent(null, null, dateOfEvent, null, null, null);
         if(calendarEvents.ceiling(temp).compareTo(calendarEvents.floor(temp)) == 0) return calendarEvents.ceiling(temp);
         else return null;
     }
@@ -141,7 +149,7 @@ public class CalendarEventContext
     	return result;
     }
         
-    public boolean editEvent(CalendarEvent event, String name, String place, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description)
+    public boolean editEvent(CalendarEvent event, String name, String place, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description, LocalDateTime buzzer)
     {
     	if(!calendarEvents.contains(event)) return false;
     	event.setName(name);
@@ -149,6 +157,7 @@ public class CalendarEventContext
     	event.setStartOfEvent(startOfEvent);
     	event.setEndOfEvent(endOfEvent);
     	event.setDescription(description);
+    	event.setBuzzer(buzzer);
     	return true;
     }
     
@@ -156,7 +165,7 @@ public class CalendarEventContext
     {
     	int elements = 0;
     	LocalDateTime dateTime = LocalDateTime.of(date, LocalTime.MIDNIGHT);
-    	CalendarEvent temp = new CalendarEvent(null, null, dateTime, null, null);
+    	CalendarEvent temp = new CalendarEvent(null, null, dateTime, null, null, null);
     	while (this.calendarEvents.lower(temp) != null)
     	{
     		this.calendarEvents.remove(this.calendarEvents.lower(temp));

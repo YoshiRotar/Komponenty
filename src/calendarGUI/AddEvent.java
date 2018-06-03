@@ -47,8 +47,16 @@ public class AddEvent extends Option
 		    	LocalDate endDate = ((Date)endDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		    	LocalTime endTime = ((Date)endTimeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
 		    	LocalDateTime endOfEvent = LocalDateTime.of(endDate, endTime);
+		    	LocalDateTime buzzer = null;
+		    	if(alarmCheckBox.isSelected())
+		    	{
+		    		LocalDate alarmDate = ((Date)dateAlarmSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+			    	LocalTime alarmTime = ((Date)timeAlarmSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+			    	buzzer = LocalDateTime.of(alarmDate, alarmTime);
+			    	
+		    	}
 		    	String description = textDescription.getText();
-		    	boolean ifAdded = calendarEventContext.addEvent(new CalendarEvent(name, place, startOfEvent, endOfEvent, description));
+		    	boolean ifAdded = calendarEventContext.addEvent(new CalendarEvent(name, place, startOfEvent, endOfEvent, description, buzzer));
 		    	if(ifAdded) JOptionPane.showMessageDialog(null,"Wydarzenie utworzone");
 		    	else JOptionPane.showMessageDialog(null,"Nie udało się utworzyć wydarzenia","Błąd",JOptionPane.ERROR_MESSAGE);
 		    	mainWindow.printCalendar();

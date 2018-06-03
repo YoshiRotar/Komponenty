@@ -49,12 +49,14 @@ public class DatabaseProvider
 		LocalDateTime startOfEvent;
 		LocalDateTime endOfEvent;
 		String description;
+		LocalDateTime buzzer;
 		CalendarEvent temp;
 		try
 		{
 			this.openConnection();
 			preparedStatement = this.connection.prepareStatement("SELECT * FROM `CalendarEvent`");
 			resultSet = preparedStatement.executeQuery();
+			context.getCalendarEvents().clear();
 			while(resultSet.next())
 			{
 				name = resultSet.getString("Name");
@@ -62,7 +64,9 @@ public class DatabaseProvider
 				startOfEvent = resultSet.getTimestamp("StartOfEvent").toLocalDateTime();
 				endOfEvent = resultSet.getTimestamp("EndOfEvent").toLocalDateTime();
 				description = resultSet.getString("Description");
-				temp = new CalendarEvent(name, place, startOfEvent, endOfEvent, description);
+				if(resultSet.getTimestamp("Buzzer")==null) buzzer = null;
+				else buzzer = resultSet.getTimestamp("Buzzer").toLocalDateTime();
+				temp = new CalendarEvent(name, place, startOfEvent, endOfEvent, description, buzzer);
 				context.getCalendarEvents().add(temp);
 			}
 			resultSet.close();
@@ -83,13 +87,14 @@ public class DatabaseProvider
 		Timestamp startOfEvent;
 		Timestamp endOfEvent;
 		String description;
+		Timestamp buzzer;
 		CalendarEvent temp;
 		try
 		{
 			this.openConnection();
 			preparedStatement = this.connection.prepareStatement("TRUNCATE TABLE `CalendarEvent`");
 			preparedStatement.executeUpdate();
-			preparedStatement = this.connection.prepareStatement("INSERT INTO `CalendarEvent`(`Name`, `Place`, `StartOfEvent`, `EndOfEvent`, `Description`) VALUES (?, ?, ?, ?, ?)");
+			preparedStatement = this.connection.prepareStatement("INSERT INTO `CalendarEvent`(`Name`, `Place`, `StartOfEvent`, `EndOfEvent`, `Description`, `Buzzer`) VALUES (?, ?, ?, ?, ?, ?)");
 			Iterator<CalendarEvent> iterator = context.getCalendarEvents().iterator();
 			while(iterator.hasNext())
 			{
@@ -99,11 +104,14 @@ public class DatabaseProvider
 				startOfEvent = Timestamp.valueOf(temp.getStartOfEvent());
 				endOfEvent = Timestamp.valueOf(temp.getEndOfEvent());
 				description = temp.getDescription();
+				if(temp.getBuzzer()==null) buzzer = null;
+				else buzzer = Timestamp.valueOf(temp.getBuzzer());
 				preparedStatement.setString(1, name);
 				preparedStatement.setString(2, place);
 	            preparedStatement.setTimestamp(3, startOfEvent);
 	            preparedStatement.setTimestamp(4, endOfEvent);
 	            preparedStatement.setString(5, description);
+	            preparedStatement.setTimestamp(6, buzzer);
 	            preparedStatement.executeUpdate();
 			}
 			preparedStatement.close();
