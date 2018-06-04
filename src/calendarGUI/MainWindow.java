@@ -26,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import calendardata.CalendarEvent;
+import calendardata.Style;
 import calendarlogic.AlarmListener;
 import calendarlogic.CalendarEventContext;
 import calendarlogic.DatabaseProvider;
@@ -43,6 +44,7 @@ public class MainWindow extends JFrame implements AlarmListener
 {
 	
 	private final CalendarEventContext calendarEventContext = new CalendarEventContext();
+	private final Style style = new Style();
 	private int month = Calendar.getInstance().get(Calendar.MONTH);
 	private int year = Calendar.getInstance().get(Calendar.YEAR);
 	private JPanel contentPane;
@@ -64,6 +66,11 @@ public class MainWindow extends JFrame implements AlarmListener
 	public CalendarEventContext getCalendarEventContext()
 	{
 		return calendarEventContext;
+	}
+	
+	public Style getStyle()
+	{
+		return style;
 	}
 	
 	public int getMonth() 
@@ -165,7 +172,7 @@ public class MainWindow extends JFrame implements AlarmListener
 		 for(int i=0; i<7; i++)
 		 {
 			 JLabel weekday = new JLabel(weekDays[i], SwingConstants.CENTER);
-			 weekday.setFont(new Font("Gothic", Font.PLAIN, 20));
+			 weekday.setFont(new Font(style.getFont(), Font.PLAIN, 20));
 			 dayPanel.add(weekday);
 		 }
 		 for (int i = 0; i<days.length; i++) 
@@ -243,7 +250,9 @@ public class MainWindow extends JFrame implements AlarmListener
 		 for(int i=0; i<days.length; i++)
 		 {
 			 days[i].setText("");
-			 days[i].setFont(new Font("Gothic", Font.PLAIN, 30));
+			 days[i].setFont(new Font(style.getFont(), Font.PLAIN, 30));
+			 days[i].setBackground(style.getBackgroundColor());
+			 days[i].setForeground(style.getFontColor());
 		 }
 		 Calendar calendar = Calendar.getInstance();
 		 LocalDate ref;
@@ -255,23 +264,23 @@ public class MainWindow extends JFrame implements AlarmListener
 		 int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		 
 		 //na razie tylko tak prowizorycznie, fajnie byloby to dac w jedna petle
-		 for(int i=0; i<days.length; i++) days[i].setBackground(Color.WHITE);
+		 for(int i=0; i<days.length; i++) days[i].setBackground(style.getBackgroundColor());
 		 for(int i=0; i<daysInMonth; i++)
 		 {
 			 ref = LocalDate.of(this.year, this.month+1, i+1);
 			 days[i+dayOfWeek-1].setText(Integer.toString(i+1));
-			 if(this.calendarEventContext.getCalendarEvents().lower(new CalendarEvent(null, null, LocalDateTime.of(ref, LocalTime.MIDNIGHT), null, null, null)) != null && this.calendarEventContext.getCalendarEvents().lower(new CalendarEvent(null, null, LocalDateTime.of(ref, LocalTime.MIDNIGHT), null, null, null)).getEndOfEvent().isAfter(LocalDateTime.of(ref, LocalTime.MIDNIGHT))) days[i+dayOfWeek-1].setBackground(new Color(255, 128, 128));
-			 else if(!this.calendarEventContext.getEventsFromCertainDay(ref).isEmpty()) days[i+dayOfWeek-1].setBackground(new Color(153, 255, 153));
+			 if(!this.calendarEventContext.getEventsFromCertainDay(ref).isEmpty()) days[i+dayOfWeek-1].setBackground(new Color(51, 204, 51));
+			 else if(this.calendarEventContext.getCalendarEvents().lower(new CalendarEvent(null, null, LocalDateTime.of(ref, LocalTime.MIDNIGHT), null, null, null)) != null && this.calendarEventContext.getCalendarEvents().lower(new CalendarEvent(null, null, LocalDateTime.of(ref, LocalTime.MIDNIGHT), null, null, null)).getEndOfEvent().isAfter(LocalDateTime.of(ref, LocalTime.MIDNIGHT))) days[i+dayOfWeek-1].setBackground(new Color(255, 128, 128));
 		 }
 		 date.setText(format.format(calendar.getTime()));
-		 date.setFont(new Font("Gothic", Font.PLAIN, 20));
+		 date.setFont(new Font(style.getFont(), Font.PLAIN, 20));
 		 if(buttonSelected!=null && month==selectedMonth && year==selectedYear) buttonSelected.setBackground(Color.LIGHT_GRAY);
 	 }
 	
 	public MainWindow() 
 	{
 		
-		super("Turbo Calendar 0.3");
+		super("Turbo Calendar 2.0.11");
 		MainWindow thisWindow = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(1280,720);

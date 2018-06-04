@@ -2,6 +2,7 @@ package calendarGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Choice;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -26,11 +27,9 @@ public class Settings extends JFrame
 
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	private JPanel contentPane;
-	private MainWindow mainWindow;
 	
 	Settings(MainWindow mainWindow)
 	{
-		this.mainWindow = mainWindow;
 		setSize(275,175);
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
@@ -43,8 +42,8 @@ public class Settings extends JFrame
 		JPanel stylePanel = new JPanel(new BorderLayout());
 		JLabel style = new JLabel("Styl: ");
 		style.setPreferredSize(new Dimension(100,50));
-		JRadioButton dark = new JRadioButton("Ciemny");
-		JRadioButton light = new JRadioButton("Jasny");
+		JRadioButton dark = new JRadioButton("Dark");
+		JRadioButton light = new JRadioButton("Light");
 		ButtonGroup styleGroup = new ButtonGroup();
 		styleGroup.add(light);
 		styleGroup.add(dark);
@@ -55,10 +54,12 @@ public class Settings extends JFrame
 		styleOptions.add(dark);
 		styleOptions.add(light);
 		stylePanel.add(styleOptions, BorderLayout.EAST);
+		if(mainWindow.getStyle().getBackgroundColor().equals(Color.WHITE)) light.setSelected(true);
+		else dark.setSelected(true);
 		contentPane.add(stylePanel);
 		
 		JPanel languagePanel = new JPanel(new BorderLayout());
-		JLabel lang = new JLabel("Jêzyk: ");
+		JLabel lang = new JLabel("Czcionka: ");
 		lang.setPreferredSize(new Dimension(100,50));
 		languagePanel.add(lang, BorderLayout.WEST);
 		JPanel langOptions = new JPanel();
@@ -66,18 +67,19 @@ public class Settings extends JFrame
 		langOptions.setLayout(new BoxLayout(langOptions, BoxLayout.X_AXIS));
 		languagePanel.add(langOptions, BorderLayout.EAST);
 		
-		Choice languageChoice = new Choice();
-		languageChoice.setMaximumSize(new Dimension(100, 50));
-		languageChoice.add("polski");
-		languageChoice.add("angielski");
-		langOptions.add(languageChoice);
+		Choice fontChoice = new Choice();
+		fontChoice.setMaximumSize(new Dimension(100, 50));
+		fontChoice.add("Arial");
+		fontChoice.add("Gothic");
+		fontChoice.select(mainWindow.getStyle().getFont());
+		langOptions.add(fontChoice);
 		
 		contentPane.add(languagePanel);
 		
 		/*
 		JPanel pathPanel = new JPanel(new BorderLayout());
 		pathPanel.setPreferredSize(new Dimension(250,20));
-		JLabel path = new JLabel("Œcie¿ka xml: ");
+		JLabel path = new JLabel("ï¿½cieï¿½ka xml: ");
 		path.setPreferredSize(new Dimension(100,50));
 		pathPanel.add(path, BorderLayout.WEST);
 		JPanel pathOptions = new JPanel();
@@ -114,9 +116,15 @@ public class Settings extends JFrame
 		{
 			public void actionPerformed(ActionEvent ae) 
 			{
-				//inne ustawienia
+				String font = fontChoice.getSelectedItem();
+				Color fontColor = light.isSelected() ? Color.BLACK : new Color(255, 204, 0);
+				Color backgroundColor = light.isSelected() ? Color.WHITE : new Color(61, 61, 92);
+				mainWindow.getStyle().setFont(font);
+				mainWindow.getStyle().setFontColor(fontColor);
+				mainWindow.getStyle().setBackgroundColor(backgroundColor);
 				//mainWindow.getCalendarEventContext().setXmlPath(pathText.getText());
 				
+				mainWindow.printCalendar();
 				dispose();
 			}
 		});
