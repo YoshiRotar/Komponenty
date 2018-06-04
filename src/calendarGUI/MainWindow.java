@@ -62,6 +62,7 @@ public class MainWindow extends JFrame implements AlarmListener
 	private CalendarEvent selectedEvent;
 	private JButton editEvent;
 	private JButton deleteEvent;
+	private JLabel[] weekDayLabels = new JLabel[7];
 	
 	public CalendarEvent getSelectedEvent()
 	{
@@ -181,9 +182,9 @@ public class MainWindow extends JFrame implements AlarmListener
 		 JPanel dayPanel = new JPanel(new GridLayout(7, 7));
 		 for(int i=0; i<7; i++)
 		 {
-			 JLabel weekday = new JLabel(weekDays[i], SwingConstants.CENTER);
-			 weekday.setFont(new Font(style.getFont(), Font.PLAIN, 20));
-			 dayPanel.add(weekday);
+			 weekDayLabels[i] = new JLabel(weekDays[i], SwingConstants.CENTER);
+			 weekDayLabels[i].setFont(new Font(style.getFont(), Font.PLAIN, 20));
+			 dayPanel.add(weekDayLabels[i]);
 		 }
 		 for (int i = 0; i<days.length; i++) 
 		 {
@@ -257,6 +258,7 @@ public class MainWindow extends JFrame implements AlarmListener
 	 
 	 public void printCalendar()
 	 {
+		 for(int i=0; i<7; i++) weekDayLabels[i].setFont(new Font(style.getFont(), Font.PLAIN, 30));
 		 for(int i=0; i<days.length; i++)
 		 {
 			 days[i].setText("");
@@ -308,17 +310,6 @@ public class MainWindow extends JFrame implements AlarmListener
 		   }
 		});
 		
-		
-		/*
-		this.addWindowListener( new WindowAdapter()
-		{
-		   public void windowClosing(WindowEvent e)
-		   {
-		      CalendarEventContext.encodeToXml(calendarEventContext);
-		      dispose();
-		   }
-		});
-		*/
 		calendarEventContext.decodeFromXml();
 		
 		contentPane = new JPanel();
