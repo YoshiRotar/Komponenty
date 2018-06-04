@@ -53,6 +53,8 @@ public class Option extends JFrame
 	protected JSpinner endDateSpinner;
 	protected JSpinner dateAlarmSpinner;
 	protected JCheckBox alarmCheckBox;
+	protected JLabel alarmTimeLabel;
+	protected JLabel alarmDateLabel;
 	
 	
 
@@ -158,7 +160,7 @@ public class Option extends JFrame
 		contentPane.add(alarmPanel);
 		
 		//godzina
-		JLabel alarmTimeLabel = new JLabel("Data Przypomnienia");
+		alarmTimeLabel = new JLabel("Czas Przypomnienia");
 		alarmTimeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		alarmDatePanel.add(alarmTimeLabel);
 		
@@ -168,7 +170,7 @@ public class Option extends JFrame
 		alarmDatePanel.add(timeAlarmSpinner);
 		
 		//data
-		JLabel alarmDateLabel = new JLabel("Czas Przypomnienia");
+		alarmDateLabel = new JLabel("Data Przypomnienia");
 		alarmDateLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		alarmDatePanel.add(alarmDateLabel);
 		

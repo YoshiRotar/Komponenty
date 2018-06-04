@@ -23,21 +23,34 @@ import calendarlogic.CalendarEventContext;
 public class EditEvent extends Option
 {
 	//tutaj jako argument trzeba dac reprezentacje eventu w warstwie logiki
-	private void initValues()
+	private void initValues(MainWindow mainWindow)
 	{
-		/*
+		
 		CalendarEvent calendarEvent = mainWindow.getSelectedEvent();
 		textFieldName.setText(calendarEvent.getName());
 		textFieldPlace.setText(calendarEvent.getPlace());
 		textDescription.setText(calendarEvent.getDescription());
 		startDateSpinner.setValue(Timestamp.valueOf(calendarEvent.getStartOfEvent()));
-		*/
+		endDateSpinner.setValue(Timestamp.valueOf(calendarEvent.getEndOfEvent()));
+		startTimeSpinner.setValue(Timestamp.valueOf(calendarEvent.getStartOfEvent()));
+		endTimeSpinner.setValue(Timestamp.valueOf(calendarEvent.getEndOfEvent()));
+		
+		if(calendarEvent.getBuzzer()!=null)
+		{
+			alarmCheckBox.setSelected(true);;
+			timeAlarmSpinner.setValue(Timestamp.valueOf(calendarEvent.getBuzzer()));
+			dateAlarmSpinner.setValue(Timestamp.valueOf(calendarEvent.getBuzzer()));
+			timeAlarmSpinner.setEnabled(true);
+			dateAlarmSpinner.setEnabled(true);
+			alarmTimeLabel.setEnabled(true);
+			alarmDateLabel.setEnabled(true);
+		}
+		
 	}
 	
 	EditEvent(CalendarEventContext calendarEventContext, MainWindow mainWindow)
 	{
 		super(calendarEventContext, mainWindow);
-		initValues();
 		JPanel panel = new JPanel();
 		panel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		panel.setMaximumSize(new Dimension(500, 30));
@@ -74,5 +87,8 @@ public class EditEvent extends Option
 		panel.add(cancel);
 		
 		contentPane.add(panel);
+		
+
+		initValues(mainWindow);
 	}
 }

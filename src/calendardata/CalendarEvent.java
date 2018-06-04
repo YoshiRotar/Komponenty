@@ -10,7 +10,8 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 	LocalDateTime endOfEvent;
 	String description;
 	LocalDateTime buzzer;
-	
+	transient boolean removedFromTree = false;
+
 	public CalendarEvent(String name, String place, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description, LocalDateTime buzzer) 
 	{
 		super();
@@ -26,6 +27,16 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 	public CalendarEvent()
 	{
 		
+	}
+	
+	public boolean isRemovedFromTree() 
+	{
+		return removedFromTree;
+	}
+
+	public void setRemovedFromTree(boolean removedFromTree) 
+	{
+		this.removedFromTree = removedFromTree;
 	}
 	
 	public LocalDateTime getBuzzer() 

@@ -160,7 +160,12 @@ public class CalendarEventContext implements XmlSerializable
 	
 	public boolean deleteEvent(CalendarEvent event)
 	{
-		return calendarEvents.remove(event);
+		if(calendarEvents.remove(event))
+		{
+			event.setRemovedFromTree(true);
+			return true;
+		}
+		else return false;
 	}
         
     public CalendarEvent getEvent(LocalDateTime dateOfEvent)
