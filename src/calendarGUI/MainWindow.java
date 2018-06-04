@@ -3,6 +3,7 @@ package calendarGUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Calendar;
 
 import javax.swing.JButton;
@@ -162,6 +165,7 @@ public class MainWindow extends JFrame implements AlarmListener
 		 for(int i=0; i<7; i++)
 		 {
 			 JLabel weekday = new JLabel(weekDays[i], SwingConstants.CENTER);
+			 weekday.setFont(new Font("Gothic", Font.PLAIN, 20));
 			 dayPanel.add(weekday);
 		 }
 		 for (int i = 0; i<days.length; i++) 
@@ -236,8 +240,13 @@ public class MainWindow extends JFrame implements AlarmListener
 	 
 	 public void printCalendar()
 	 {
-		 for(int i=0; i<days.length; i++) days[i].setText("");
+		 for(int i=0; i<days.length; i++)
+		 {
+			 days[i].setText("");
+			 days[i].setFont(new Font("Gothic", Font.PLAIN, 30));
+		 }
 		 Calendar calendar = Calendar.getInstance();
+		 LocalDate ref;
 		 calendar.set(year, month, 1);
 		 SimpleDateFormat format = new SimpleDateFormat("MM, YYYY");
 		 int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
@@ -249,10 +258,13 @@ public class MainWindow extends JFrame implements AlarmListener
 		 for(int i=0; i<days.length; i++) days[i].setBackground(Color.WHITE);
 		 for(int i=0; i<daysInMonth; i++)
 		 {
+			 ref = LocalDate.of(this.year, this.month+1, i+1);
 			 days[i+dayOfWeek-1].setText(Integer.toString(i+1));
-			 if(!this.calendarEventContext.getEventsFromCertainDay(LocalDate.of(this.year, this.month+1, i+1)).isEmpty()) days[i+dayOfWeek-1].setBackground(Color.GREEN);
+			 if(this.calendarEventContext.getCalendarEvents().lower(new CalendarEvent(null, null, LocalDateTime.of(ref, LocalTime.MIDNIGHT), null, null, null)) != null && this.calendarEventContext.getCalendarEvents().lower(new CalendarEvent(null, null, LocalDateTime.of(ref, LocalTime.MIDNIGHT), null, null, null)).getEndOfEvent().isAfter(LocalDateTime.of(ref, LocalTime.MIDNIGHT))) days[i+dayOfWeek-1].setBackground(new Color(255, 128, 128));
+			 else if(!this.calendarEventContext.getEventsFromCertainDay(ref).isEmpty()) days[i+dayOfWeek-1].setBackground(new Color(153, 255, 153));
 		 }
 		 date.setText(format.format(calendar.getTime()));
+		 date.setFont(new Font("Gothic", Font.PLAIN, 20));
 		 if(buttonSelected!=null && month==selectedMonth && year==selectedYear) buttonSelected.setBackground(Color.LIGHT_GRAY);
 	 }
 	
