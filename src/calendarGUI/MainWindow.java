@@ -26,10 +26,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import calendardata.CalendarEvent;
-import calendardata.Style;
 import calendarlogic.AlarmListener;
 import calendarlogic.CalendarEventContext;
 import calendarlogic.DatabaseProvider;
+import calendarlogic.StyleContext;
 import calendarlogic.ToIcsConverter;
 
 import javax.swing.JScrollPane;
@@ -44,7 +44,7 @@ public class MainWindow extends JFrame implements AlarmListener
 {
 	
 	private final CalendarEventContext calendarEventContext = new CalendarEventContext();
-	private final Style style = new Style();
+	private StyleContext style = new StyleContext();
 	private int month = Calendar.getInstance().get(Calendar.MONTH);
 	private int year = Calendar.getInstance().get(Calendar.YEAR);
 	private JPanel contentPane;
@@ -79,7 +79,7 @@ public class MainWindow extends JFrame implements AlarmListener
 		return calendarEventContext;
 	}
 	
-	public Style getStyle()
+	public StyleContext getStyleContext()
 	{
 		return style;
 	}
@@ -256,9 +256,9 @@ public class MainWindow extends JFrame implements AlarmListener
 		 for(int i=0; i<days.length; i++)
 		 {
 			 days[i].setText("");
-			 days[i].setFont(new Font(style.getFont(), Font.PLAIN, 30));
-			 days[i].setBackground(style.getBackgroundColor());
-			 days[i].setForeground(style.getFontColor());
+			 days[i].setFont(new Font(style.getStyle().getFont(), Font.PLAIN, 30));
+			 days[i].setBackground(style.getStyle().getBackgroundColor());
+			 days[i].setForeground(style.getStyle().getFontColor());
 		 }
 		 Calendar calendar = Calendar.getInstance();
 		 LocalDate ref;
@@ -270,7 +270,7 @@ public class MainWindow extends JFrame implements AlarmListener
 		 int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		 
 		 //na razie tylko tak prowizorycznie, fajnie byloby to dac w jedna petle
-		 for(int i=0; i<days.length; i++) days[i].setBackground(style.getBackgroundColor());
+		 for(int i=0; i<days.length; i++) days[i].setBackground(style.getStyle().getBackgroundColor());
 		 for(int i=0; i<daysInMonth; i++)
 		 {
 			 ref = LocalDate.of(this.year, this.month+1, i+1);
@@ -279,7 +279,7 @@ public class MainWindow extends JFrame implements AlarmListener
 			 else if(this.calendarEventContext.getCalendarEvents().lower(new CalendarEvent(null, null, LocalDateTime.of(ref, LocalTime.MIDNIGHT), null, null, null)) != null && this.calendarEventContext.getCalendarEvents().lower(new CalendarEvent(null, null, LocalDateTime.of(ref, LocalTime.MIDNIGHT), null, null, null)).getEndOfEvent().isAfter(LocalDateTime.of(ref, LocalTime.MIDNIGHT))) days[i+dayOfWeek-1].setBackground(new Color(255, 128, 128));
 		 }
 		 date.setText(format.format(calendar.getTime()));
-		 date.setFont(new Font(style.getFont(), Font.PLAIN, 20));
+		 date.setFont(new Font(style.getStyle().getFont(), Font.PLAIN, 20));
 		 if(buttonSelected!=null && month==selectedMonth && year==selectedYear) buttonSelected.setBackground(Color.LIGHT_GRAY);
 	 }
 	
@@ -299,12 +299,14 @@ public class MainWindow extends JFrame implements AlarmListener
 		{
 		   public void windowClosing(WindowEvent e)
 		   {
-			   calendarEventContext.encodeToXml();
+			  calendarEventContext.encodeToXml();
+			  style.encodeToXml(); 
 		      dispose();
 		   }
 		});
 		
 		calendarEventContext.decodeFromXml();
+		style.decodeFromXml();
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -520,7 +522,7 @@ public class MainWindow extends JFrame implements AlarmListener
 	@Override
 	public void onAlarm(String message) 
 	{
-		AlarmWindow alarmWindow = new AlarmWindow(message);
+		AlarmWindow alarmWindow = new AlarmWindow(message, style.getStyle().getAlarmPath());
 		
 	}
 

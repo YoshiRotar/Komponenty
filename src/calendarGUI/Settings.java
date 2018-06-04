@@ -5,7 +5,6 @@ import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -54,7 +53,7 @@ public class Settings extends JFrame
 		styleOptions.add(dark);
 		styleOptions.add(light);
 		stylePanel.add(styleOptions, BorderLayout.EAST);
-		if(mainWindow.getStyle().getBackgroundColor().equals(Color.WHITE)) light.setSelected(true);
+		if(mainWindow.getStyleContext().getStyle().getBackgroundColor().equals(Color.WHITE)) light.setSelected(true);
 		else dark.setSelected(true);
 		contentPane.add(stylePanel);
 		
@@ -71,14 +70,14 @@ public class Settings extends JFrame
 		fontChoice.setMaximumSize(new Dimension(100, 50));
 		fontChoice.add("Arial");
 		fontChoice.add("Gothic");
-		fontChoice.select(mainWindow.getStyle().getFont());
+		fontChoice.select(mainWindow.getStyleContext().getStyle().getFont());
 		langOptions.add(fontChoice);
 		
 		contentPane.add(languagePanel);
-		/*
+		
 		JPanel pathPanel = new JPanel(new BorderLayout());
 		pathPanel.setPreferredSize(new Dimension(250,20));
-		JLabel path = new JLabel("åcieøka alarmu: ");
+		JLabel path = new JLabel("≈öcie≈ºka alarmu: ");
 		path.setPreferredSize(new Dimension(100,50));
 		pathPanel.add(path, BorderLayout.WEST);
 		JPanel pathOptions = new JPanel();
@@ -86,12 +85,11 @@ public class Settings extends JFrame
 		pathOptions.setLayout(new BoxLayout(pathOptions, BoxLayout.X_AXIS));
 		pathPanel.add(pathOptions, BorderLayout.EAST);
 		
-		JFileChooser chooser = new JFileChooser();
-		//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		JFileChooser chooser = new JFileChooser("./data/");
 		JButton pathButton = new JButton("...");
 		JTextField pathText = new JTextField();
 		pathText.setPreferredSize(new Dimension(75,10));
-		pathText.setText(mainWindow.getCalendarEventContext().getAlarmPath());
+		pathText.setText(mainWindow.getStyleContext().getStyle().getAlarmPath());
 		pathButton.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
@@ -108,7 +106,7 @@ public class Settings extends JFrame
 		pathOptions.add(pathText);
 		pathOptions.add(pathButton);
 		contentPane.add(pathPanel);
-		*/
+		
 		JPanel okPanel = new JPanel(new FlowLayout());
 		JButton ok = new JButton("OK");
 		ok.addActionListener(new ActionListener() 
@@ -118,9 +116,12 @@ public class Settings extends JFrame
 				String font = fontChoice.getSelectedItem();
 				Color fontColor = light.isSelected() ? Color.BLACK : new Color(255, 204, 0);
 				Color backgroundColor = light.isSelected() ? Color.WHITE : new Color(61, 61, 92);
-				mainWindow.getStyle().setFont(font);
-				mainWindow.getStyle().setFontColor(fontColor);
-				mainWindow.getStyle().setBackgroundColor(backgroundColor);
+				String alarmPath = mainWindow.getStyleContext().getStyle().getAlarmPath();
+				if( chooser.getSelectedFile() != null ) alarmPath = chooser.getSelectedFile().getAbsolutePath();
+				mainWindow.getStyleContext().getStyle().setFont(font);
+				mainWindow.getStyleContext().getStyle().setFontColor(fontColor);
+				mainWindow.getStyleContext().getStyle().setBackgroundColor(backgroundColor);
+				mainWindow.getStyleContext().getStyle().setAlarmPath(alarmPath);
 				//mainWindow.getCalendarEventContext().setAlarmPath(pathText.getText());
 				
 				mainWindow.printCalendar();

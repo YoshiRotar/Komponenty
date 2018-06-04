@@ -22,7 +22,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class CalendarEventContext 
+public class CalendarEventContext implements XmlSerializable
 {
 	private String xmlPath = "./data/events.xml";
 	private TreeSet<CalendarEvent> calendarEvents = new TreeSet<CalendarEvent>();
@@ -73,7 +73,7 @@ public class CalendarEventContext
 		file.mkdirs();
 		try
 		{
-			encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream(xmlPath)));
+			encoder = new XMLEncoder(new BufferedOutputStream(new FileOutputStream(xmlPath)));
 			encoder.setPersistenceDelegate(LocalDateTime.class, new PersistenceDelegate() 
 				{
                     @Override
@@ -90,7 +90,10 @@ public class CalendarEventContext
 		{
 			System.out.println("Nie udało się otworzyc pliku xml");
 		}
-		encoder.close();
+		finally
+		{
+			if(encoder != null )encoder.close();
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
