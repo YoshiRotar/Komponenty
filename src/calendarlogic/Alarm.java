@@ -9,11 +9,19 @@ import java.util.concurrent.TimeUnit;
 
 
 import calendardata.CalendarEvent;
-
+/**
+ * 
+ * Obiekty klasy Alarm reprezentuj¹ pojedyncze przypomnienia 
+ * 
+ * @author Mateusz Kuzniarek
+ * @author Pawe³ M³ynarczyk
+ *
+ */
 public class Alarm implements Runnable
 {
-	CalendarEvent calendarEvent;
-	AlarmListener listener;
+	
+	private CalendarEvent calendarEvent;
+	private AlarmListener listener;
 
 	public Alarm(AlarmListener listener, CalendarEvent calendarEvent)
 	{

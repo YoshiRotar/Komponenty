@@ -130,12 +130,6 @@ public class MainWindow extends JFrame implements AlarmListener
 		scrollingEventPanel.removeAll();
 		for(CalendarEvent calendarEvent : calendarEventContext.getEventsFromCertainDay(LocalDate.of(selectedYear, selectedMonth+1, day)))
 		{
-			/*
-			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +"Miejsce: " + calendarEvent.getPlace()+ "<br>" +
-						  "Czas: " +  calendarEvent.getStartOfEvent().getHour() + ":" + calendarEvent.getStartOfEvent().getMinute() + "<br>" +
-						  "Zako?czenie; " + calendarEvent.getEndOfEvent().toString() + "<br>" +
-						  "Opis: " + calendarEvent.getDescription() + "</html>";
-						  */
 			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +
 						  "Miejsce: " + calendarEvent.getPlace()+ "<br>" +
 						  "Czas: " +  calendarEvent.getStartOfEvent().getHour() + ":" +

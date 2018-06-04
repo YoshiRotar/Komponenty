@@ -65,9 +65,12 @@ public class AlarmWindow extends JFrame
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 		setContentPane(contentPane);
-		setVisible(true);
+		
+		System.out.println(message);
 		
 		JLabel label = new JLabel(message);
 		contentPane.add(label);
+
+		setVisible(true);
 	}
 }
