@@ -73,11 +73,10 @@ public class Settings extends JFrame
 		langOptions.add(languageChoice);
 		
 		contentPane.add(languagePanel);
-		
 		/*
 		JPanel pathPanel = new JPanel(new BorderLayout());
 		pathPanel.setPreferredSize(new Dimension(250,20));
-		JLabel path = new JLabel("Œcie¿ka xml: ");
+		JLabel path = new JLabel("Œcie¿ka alarmu: ");
 		path.setPreferredSize(new Dimension(100,50));
 		pathPanel.add(path, BorderLayout.WEST);
 		JPanel pathOptions = new JPanel();
@@ -86,11 +85,11 @@ public class Settings extends JFrame
 		pathPanel.add(pathOptions, BorderLayout.EAST);
 		
 		JFileChooser chooser = new JFileChooser();
-		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		//chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		JButton pathButton = new JButton("...");
 		JTextField pathText = new JTextField();
 		pathText.setPreferredSize(new Dimension(75,10));
-		pathText.setText(mainWindow.getCalendarEventContext().getXmlPath());
+		pathText.setText(mainWindow.getCalendarEventContext().getAlarmPath());
 		pathButton.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
@@ -98,7 +97,7 @@ public class Settings extends JFrame
 				int result = chooser.showOpenDialog(pathPanel);
 				if (result == JFileChooser.APPROVE_OPTION) 
 				{
-				    pathText.setText(chooser.getSelectedFile().toString()+"events.xml");
+				    pathText.setText(chooser.getSelectedFile().toString());
 				}
 				
 			}
@@ -115,7 +114,7 @@ public class Settings extends JFrame
 			public void actionPerformed(ActionEvent ae) 
 			{
 				//inne ustawienia
-				//mainWindow.getCalendarEventContext().setXmlPath(pathText.getText());
+				//mainWindow.getCalendarEventContext().setAlarmPath(pathText.getText());
 				
 				dispose();
 			}
