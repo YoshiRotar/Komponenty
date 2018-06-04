@@ -32,15 +32,13 @@ public class Alarm implements Runnable
 		{
 			TimeUnit.SECONDS.sleep(duration.toSeconds());
 			//Na wypadek gdyby czas przypomnienia zostal edytowany. Jesli jeszcze nie czas rozpocznij metode od poczatku
-			System.out.println(calendarEvent.getBuzzer());
-			System.out.println(LocalDateTime.now());
 			if(Duration.between(LocalDateTime.now(), calendarEvent.getBuzzer()).compareTo(Duration.ofSeconds(1))>0)
 			{
 				System.out.println("weszlo");
 				run();
 				return;
 			}
-			System.out.println("przeslo");
+			if(calendarEvent.isRemovedFromTree()) return;
 			String message = "<html>Przypomnienie!<br>Nazwa: " + calendarEvent.getName() + "<br>Miejsce: " + calendarEvent.getPlace() +
 					"<br>Rozpoczêcie: " + dateFormat.format(Date.from(calendarEvent.getStartOfEvent().atZone(ZoneId.systemDefault()).toInstant()));
 			listener.onAlarm(message);
