@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +26,7 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
+import calendardata.CalendarEvent;
 import calendarlogic.CalendarEventContext;
 
 
@@ -176,6 +179,29 @@ public class Option extends JFrame
 		
 		contentPane.add(alarmDatePanel);
 		for(Component c : alarmDatePanel.getComponents()) c.setEnabled(false);
+	}
+	
+	protected CalendarEvent makeEventOutOfTakenData()
+	{
+		String name = textFieldName.getText();
+    	String place = textFieldPlace.getText();
+    	LocalDate startDate = ((Date)startDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    	LocalTime startTime = ((Date)startTimeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+    	LocalDateTime startOfEvent = LocalDateTime.of(startDate, startTime);
+    	LocalDate endDate = ((Date)endDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    	LocalTime endTime = ((Date)endTimeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+    	LocalDateTime endOfEvent = LocalDateTime.of(endDate, endTime);
+    	LocalDateTime buzzer = null;
+    	if(alarmCheckBox.isSelected())
+    	{
+    		LocalDate alarmDate = ((Date)dateAlarmSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    	LocalTime alarmTime = ((Date)timeAlarmSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
+	    	buzzer = LocalDateTime.of(alarmDate, alarmTime);
+	    	
+    	}
+    	String description = textDescription.getText();
+    	
+    	return new CalendarEvent(name, place, startOfEvent, endOfEvent, description, buzzer);
 	}
 	
 	public Option(CalendarEventContext calendarEventContext, MainWindow mainWindow)

@@ -35,35 +35,16 @@ public class AddEvent extends Option
 		{
 		    public void actionPerformed(ActionEvent event) 
 		    {
-		    	String name = textFieldName.getText();
-		    	String place = textFieldPlace.getText();
-		    	/*
-		    	LocalDateTime startDate = LocalDateTime.ofInstant(((Date)startDateSpinner.getValue()).toInstant(), ZoneId.systemDefault());
-		    	LocalDateTime startTime = LocalDateTime.ofInstant(((Date)startTimeSpinner.getValue()).toInstant(), ZoneId.systemDefault());
-		    	*/
-		    	LocalDate startDate = ((Date)startDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		    	LocalTime startTime = ((Date)startTimeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
-		    	LocalDateTime startOfEvent = LocalDateTime.of(startDate, startTime);
-		    	LocalDate endDate = ((Date)endDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-		    	LocalTime endTime = ((Date)endTimeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
-		    	LocalDateTime endOfEvent = LocalDateTime.of(endDate, endTime);
-		    	LocalDateTime buzzer = null;
-		    	if(alarmCheckBox.isSelected())
-		    	{
-		    		LocalDate alarmDate = ((Date)dateAlarmSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-			    	LocalTime alarmTime = ((Date)timeAlarmSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
-			    	buzzer = LocalDateTime.of(alarmDate, alarmTime);
-			    	
-		    	}
-		    	String description = textDescription.getText();
-		    	CalendarEvent newEvent = new CalendarEvent(name, place, startOfEvent, endOfEvent, description, buzzer);
+		    	CalendarEvent newEvent = makeEventOutOfTakenData();
 		    	boolean ifAdded = calendarEventContext.addEvent(newEvent);
-		    	if(ifAdded) 
+		    	if(ifAdded) JOptionPane.showMessageDialog(null,"Wydarzenie utworzone");
+		    	else 
 		    	{
-		    		JOptionPane.showMessageDialog(null,"Wydarzenie utworzone");
-		    		mainWindow.getCalendarEventContext().initAlarm(mainWindow, newEvent);
+		    		JOptionPane.showMessageDialog(null,"Nie udało się utworzyć wydarzenia","Błąd",JOptionPane.ERROR_MESSAGE);
+		    		return;
 		    	}
-		    	else JOptionPane.showMessageDialog(null,"Nie udało się utworzyć wydarzenia","Błąd",JOptionPane.ERROR_MESSAGE);
+
+	    		mainWindow.getCalendarEventContext().initAlarm(mainWindow, newEvent);
 		    	mainWindow.printCalendar();
 		    	mainWindow.printEvents();
 				dispose();

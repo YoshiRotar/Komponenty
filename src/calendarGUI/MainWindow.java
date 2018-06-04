@@ -61,6 +61,16 @@ public class MainWindow extends JFrame implements AlarmListener
 	private JButton editEvent;
 	private JButton deleteEvent;
 	
+	public CalendarEvent getSelectedEvent()
+	{
+		return selectedEvent;
+	}
+
+	public void setSelectedEvent(CalendarEvent selectedEvent) 
+	{
+		this.selectedEvent = selectedEvent;
+	}
+	
 	public CalendarEventContext getCalendarEventContext()
 	{
 		return calendarEventContext;

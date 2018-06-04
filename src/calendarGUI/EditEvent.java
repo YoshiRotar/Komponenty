@@ -4,11 +4,19 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import calendardata.CalendarEvent;
 import calendarlogic.CalendarEventContext;
 
 @SuppressWarnings("serial")
@@ -17,7 +25,13 @@ public class EditEvent extends Option
 	//tutaj jako argument trzeba dac reprezentacje eventu w warstwie logiki
 	private void initValues()
 	{
-		//Uzupelnienie pol wartosciami
+		/*
+		CalendarEvent calendarEvent = mainWindow.getSelectedEvent();
+		textFieldName.setText(calendarEvent.getName());
+		textFieldPlace.setText(calendarEvent.getPlace());
+		textDescription.setText(calendarEvent.getDescription());
+		startDateSpinner.setValue(Timestamp.valueOf(calendarEvent.getStartOfEvent()));
+		*/
 	}
 	
 	EditEvent(CalendarEventContext calendarEventContext, MainWindow mainWindow)
@@ -33,7 +47,16 @@ public class EditEvent extends Option
 		{
 		    public void actionPerformed(ActionEvent event) 
 		    {
-		    	//dodawanie
+		    	CalendarEvent newEvent = makeEventOutOfTakenData();
+		    	
+		    	boolean ifAdded = calendarEventContext.editEvent(mainWindow.getSelectedEvent(), newEvent.getName(), newEvent.getPlace(), newEvent.getStartOfEvent(), newEvent.getEndOfEvent(), newEvent.getDescription(), newEvent.getBuzzer());
+		    	if(ifAdded) JOptionPane.showMessageDialog(null,"Wydarzenie utworzone");
+		    	else 
+		    	{
+		    		JOptionPane.showMessageDialog(null,"Nie udało się utworzyć wydarzenia","Błąd",JOptionPane.ERROR_MESSAGE);
+		    		return;
+		    	}
+
 		    	mainWindow.printCalendar();
 		    	mainWindow.printEvents();
 				dispose();

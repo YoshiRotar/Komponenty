@@ -110,7 +110,7 @@ public class CalendarEventContext
 		}
 	}
 	
-	public boolean addEvent(CalendarEvent newEvent)
+	private boolean checkIntegrity(CalendarEvent newEvent)
 	{
 		if(newEvent.getName().equals("") || newEvent.getStartOfEvent() == null)
 		{
@@ -130,7 +130,7 @@ public class CalendarEventContext
 		}
 		else if(calendarEvents.isEmpty())
 		{
-			return calendarEvents.add(newEvent);
+			return true;
 		}
 		else if ((calendarEvents.floor(newEvent) != null && calendarEvents.floor(newEvent).compareTo(newEvent) == 0))
 		{
@@ -138,11 +138,20 @@ public class CalendarEventContext
 		}
 		else if ((calendarEvents.lower(newEvent) == null || calendarEvents.lower(newEvent).getEndOfEvent().isBefore(newEvent.getStartOfEvent())) && (calendarEvents.higher(newEvent) == null || calendarEvents.higher(newEvent).getStartOfEvent().isAfter(newEvent.getEndOfEvent())))
 		{
-			return calendarEvents.add(newEvent);
+			return true;
 		}
 		else
 		{
 			return false;
+		}
+	}
+	
+	public boolean addEvent(CalendarEvent newEvent)
+	{
+		if(!checkIntegrity(newEvent)) return false;
+		else
+		{
+			return calendarEvents.add(newEvent);
 		}
 	}
 	
@@ -174,6 +183,8 @@ public class CalendarEventContext
     public boolean editEvent(CalendarEvent event, String name, String place, LocalDateTime startOfEvent, LocalDateTime endOfEvent, String description, LocalDateTime buzzer)
     {
     	if(!calendarEvents.contains(event)) return false;
+    	CalendarEvent tempEvent = new CalendarEvent(name, place, startOfEvent, endOfEvent, description, buzzer);
+    	if(!checkIntegrity(tempEvent)) return false;
     	event.setName(name);
     	event.setPlace(place);
     	event.setStartOfEvent(startOfEvent);
