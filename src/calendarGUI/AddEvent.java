@@ -37,10 +37,6 @@ public class AddEvent extends Option
 		    {
 		    	String name = textFieldName.getText();
 		    	String place = textFieldPlace.getText();
-		    	/*
-		    	LocalDateTime startDate = LocalDateTime.ofInstant(((Date)startDateSpinner.getValue()).toInstant(), ZoneId.systemDefault());
-		    	LocalDateTime startTime = LocalDateTime.ofInstant(((Date)startTimeSpinner.getValue()).toInstant(), ZoneId.systemDefault());
-		    	*/
 		    	LocalDate startDate = ((Date)startDateSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 		    	LocalTime startTime = ((Date)startTimeSpinner.getValue()).toInstant().atZone(ZoneId.systemDefault()).toLocalTime();
 		    	LocalDateTime startOfEvent = LocalDateTime.of(startDate, startTime);
