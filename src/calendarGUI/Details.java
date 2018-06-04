@@ -46,6 +46,10 @@ public class Details extends JFrame
 		String text = calendarEvent.getDescription().replaceAll("\n", "<br>");
 		JLabel descriptionText = new JLabel("<html>" + text + "</hrml>");
 		descriptionText.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+		JLabel alarm = new JLabel();
+		if(calendarEvent.getBuzzer()==null) alarm.setText("Przypomnienie: Brak");
+		else alarm.setText("Przypomnienie: " + dateFormat.format(Date.from(calendarEvent.getBuzzer().atZone(ZoneId.systemDefault()).toInstant())));
+		alarm.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 		JPanel scrollingPanel = new JPanel();
 		scrollingPanel.setLayout(new BoxLayout(scrollingPanel, BoxLayout.Y_AXIS));
 		scrollingPanel.add(descriptionText);
@@ -57,6 +61,7 @@ public class Details extends JFrame
 		contentPane.add(place);
 		contentPane.add(start);
 		contentPane.add(end);
+		contentPane.add(alarm);
 		contentPane.add(description);
 		contentPane.add(scrollPane);
 	}
