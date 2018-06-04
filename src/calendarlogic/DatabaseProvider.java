@@ -19,10 +19,10 @@ public class DatabaseProvider
 	{
 		try
 		{
-			//Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection( "jdbc:mysql://db4free.net:3306/mkpm_kalendarz?autoReconnect=true&useSSL=false" , "kalendarz", "kalendarz" );
 		}
-		catch (SQLException /*| ClassNotFoundException*/ e)
+		catch (SQLException | ClassNotFoundException e)
 		{
 			System.out.println(e.getMessage());
 		}
