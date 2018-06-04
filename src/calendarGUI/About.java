@@ -26,7 +26,7 @@ public class About extends JFrame
 		setVisible(true);
 		
 		
-		JLabel about = new JLabel("<html>Autorzy:<br/><p>Pawe³ M³ynarczyk<br/>Mateusz Kuzniarek<<br/><br/><br/>Wersja:<br/>0.0072v1_turbo</p></html>");
+		JLabel about = new JLabel("<html>Autorzy:<br/><p>Paweï¿½ Mï¿½ynarczyk<br/>Mateusz Kuzniarek<<br/><br/><br/>Wersja:<br/>2v0.11_turbo</p></html>");
 		contentPane.add(about);
 		
 	}
