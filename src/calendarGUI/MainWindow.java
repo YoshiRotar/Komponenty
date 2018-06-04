@@ -293,20 +293,22 @@ public class MainWindow extends JFrame implements AlarmListener
 		{
 		   public void windowClosing(WindowEvent e)
 		   {
-		      calendarEventContext.encodeToXml();
+			   calendarEventContext.encodeToXml();
 		      dispose();
 		   }
 		});
 		
+		
+		/*
 		this.addWindowListener( new WindowAdapter()
 		{
 		   public void windowClosing(WindowEvent e)
 		   {
-		      calendarEventContext.encodeToXml();
+		      CalendarEventContext.encodeToXml(calendarEventContext);
 		      dispose();
 		   }
 		});
-		
+		*/
 		calendarEventContext.decodeFromXml();
 		
 		contentPane = new JPanel();
