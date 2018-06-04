@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import calendardata.CalendarEvent;
+import calendarlogic.AlarmListener;
 import calendarlogic.CalendarEventContext;
 import calendarlogic.DatabaseProvider;
 import calendarlogic.ToIcsConverter;
@@ -35,7 +36,7 @@ import javax.swing.JMenuItem;
 import javax.swing.BoxLayout;
 
 @SuppressWarnings("serial")
-public class MainWindow extends JFrame 
+public class MainWindow extends JFrame implements AlarmListener
 {
 	
 	private final CalendarEventContext calendarEventContext = new CalendarEventContext();
@@ -265,6 +266,8 @@ public class MainWindow extends JFrame
 		setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		setResizable(false);
 		
+		calendarEventContext.initAlarms(this);
+		
 		this.addWindowListener( new WindowAdapter()
 		{
 		   public void windowClosing(WindowEvent e)
@@ -493,6 +496,13 @@ public class MainWindow extends JFrame
 		JPanel panel = new JPanel();
 		panel.setPreferredSize(new Dimension(0,50));
 		contentPane.add(panel, BorderLayout.SOUTH);
+		
+	}
+
+	@Override
+	public void onAlarm(String message) 
+	{
+		AlarmWindow alarmWindow = new AlarmWindow(message);
 		
 	}
 

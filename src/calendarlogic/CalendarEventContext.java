@@ -42,6 +42,28 @@ public class CalendarEventContext
 		return calendarEvents;
 	}
 	
+	public void initAlarm(AlarmListener listener, CalendarEvent calendarEvent)
+	{
+		
+		if(calendarEvent.getBuzzer()!=null)
+		{
+			Alarm alarm = new Alarm(listener, calendarEvent);
+			new Thread(alarm).start();
+		}
+	}
+	
+	public void initAlarms(AlarmListener listener)
+	{
+		System.out.println();
+		for(CalendarEvent calendarEvent : calendarEvents)
+		{
+			if(calendarEvent.getBuzzer()!=null)
+			{
+				initAlarm(listener, calendarEvent);
+			}
+		}
+	}
+	
 	public void encodeToXml()
 	{
 		XMLEncoder encoder=null;

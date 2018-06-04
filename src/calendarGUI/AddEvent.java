@@ -56,8 +56,13 @@ public class AddEvent extends Option
 			    	
 		    	}
 		    	String description = textDescription.getText();
-		    	boolean ifAdded = calendarEventContext.addEvent(new CalendarEvent(name, place, startOfEvent, endOfEvent, description, buzzer));
-		    	if(ifAdded) JOptionPane.showMessageDialog(null,"Wydarzenie utworzone");
+		    	CalendarEvent newEvent = new CalendarEvent(name, place, startOfEvent, endOfEvent, description, buzzer);
+		    	boolean ifAdded = calendarEventContext.addEvent(newEvent);
+		    	if(ifAdded) 
+		    	{
+		    		JOptionPane.showMessageDialog(null,"Wydarzenie utworzone");
+		    		mainWindow.getCalendarEventContext().initAlarm(mainWindow, newEvent);
+		    	}
 		    	else JOptionPane.showMessageDialog(null,"Nie udało się utworzyć wydarzenia","Błąd",JOptionPane.ERROR_MESSAGE);
 		    	mainWindow.printCalendar();
 		    	mainWindow.printEvents();
