@@ -29,11 +29,11 @@ public class AlarmWindow extends JFrame
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	Clip clip;
 	
-	AlarmWindow(String message)
+	AlarmWindow(String message, String alarmPath)
 	{
 		try
 		{
-			File file = new File("./data/alarm.wav");
+			File file = new File(alarmPath);
 	        AudioInputStream audioIn = AudioSystem.getAudioInputStream(file);
 	        clip = AudioSystem.getClip();
 	        clip.open(audioIn);

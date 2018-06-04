@@ -4,9 +4,21 @@ import java.awt.Color;
 
 public class Style
 {
-	String font = "Arial";
-	Color fontColor = Color.BLACK;
-	Color backgroundColor = Color.WHITE;
+	String font;
+	Color fontColor;
+	Color backgroundColor;
+	String alarmPath;
+
+	public Style()
+	{
+		if(font == null) font = "Arial";
+		if(fontColor == null || backgroundColor == null)
+		{
+			fontColor = Color.BLACK;
+			backgroundColor = Color.WHITE;
+		}
+		if(alarmPath == null) alarmPath = "./data/alarm.wav";
+	}
 	
 	public String getFont()
 	{
@@ -38,5 +50,13 @@ public class Style
 		this.backgroundColor = backgroundColor;
 	}
 	
+	public String getAlarmPath()
+	{
+		return alarmPath;
+	}
 
+	public void setAlarmPath(String alarmPath)
+	{
+		this.alarmPath = alarmPath;
+	}
 }
