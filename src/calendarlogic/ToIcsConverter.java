@@ -11,11 +11,11 @@ import calendardata.CalendarEvent;
 
 /**
  * 
- * Klasa zawieraj¹ca operacjê konwersji wydarzeñ do formatu .ics (format ten umo¿liwia zaimportowanie wydarzeñ
- * do programu Microsoft OutLook
+ * Klasa zawierajÄ…ca operacjÄ™ konwersji wydarzeÅ„ do formatu .ics (format ten umoÅ¼liwia zaimportowanie wydarzen
+ * do programu Microsoft OutLook)
  * 
  * @author Mateusz Kuzniarek
- * @author Pawe³ M³ynarczyk
+ * @author PaweÅ‚ MÅ‚ynarczyk
  */
 public class ToIcsConverter
 {
@@ -23,9 +23,9 @@ public class ToIcsConverter
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss");
 	
 	/**
-	 * Statyczna metoda konwertuj¹ca wydarzenie do postaci w formacie .ics
-	 * @param calendarEventContext obiekt zawieraj¹cy konwertowane wydarzenia
-	 * @param path ³añcuch reprezentuj¹cy œcie¿kê dostêpu do miejsca, w którym zapisany zostanie plik .ics
+	 * Statyczna metoda konwertujÄ…ca wydarzenie do postaci w formacie .ics
+	 * @param calendarEventContext obiekt zawierajÄ…cy konwertowane wydarzenia
+	 * @param path ï¿½aï¿½cuch reprezentujÄ…cy Å›cieÅ¼kÄ™ dostÄ™pu do miejsca, w ktÃ³rym zapisany zostanie plik .ics
 	 */
 	public static void convert(CalendarEventContext calendarEventContext, String path)
 	{

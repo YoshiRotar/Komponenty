@@ -17,11 +17,11 @@ import java.time.LocalDateTime;
 import calendardata.Style;
 
 /**
- * Klasa zawieraj¹ca informacje o stylu graficznym aplikacji i udostêpniaj¹ca operacje odczytu i zapisu do pliku .xml
+ * Klasa zawierajÄ…ca informacje o stylu graficznym aplikacji i udostÄ™pniajÄ…ca operacje odczytu i zapisu do pliku .xml
  * 
  * @see XmlSerializable
  * @author Mateusz Kuzniarek
- * @author Pawe³ M³ynarczyk
+ * @author PaweÅ‚ MÅ‚ynarczyk
  */
 public class StyleContext implements XmlSerializable
 {

@@ -11,9 +11,9 @@ import java.util.concurrent.TimeUnit;
 import calendardata.CalendarEvent;
 /**
  * 
- * Obiekty klasy Alarm reprezentują pojedyncze przypomnienia a. Komunikują się one z graficznym interfejsem użytkownika
+ * Obiekty klasy Alarm reprezentują pojedyncze przypomnienia. Komunikują się one z graficznym interfejsem użytkownika
  * przy pomocy wzorca projektowego - Obserwator Klasa ta implementuje interfejsc Runnable, aby umożliwić przy jej pomocy
- * utworzenie nowego wątku. * 
+ * utworzenie nowego wątku.
  * @see AlarmListener
  * @author Mateusz Kuzniarek
  * @author Pawe� M�ynarczyk

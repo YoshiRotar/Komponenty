@@ -1,36 +1,36 @@
 package calendarlogic;
 
 /**
- * Interfejs zawieraj¹cy metody zwi¹zane z serializacj¹ danych do pliku .xml
+ * Interfejs zawierajÄ…cy metody zwiÄ…zane z serializacjÄ… danych do pliku .xml
  * 
  * @author Mateusz Kuzniarek
- * @author Pawe³ M³ynarczyk
+ * @author PaweÅ‚ MÅ‚ynarczyk
  */
 public interface XmlSerializable
 {
 	/**
-     * Metoda pozawalaj¹ca na odczytanie œciezki dostêpu do pliku .xml
+     * Metoda pozawalajÄ…ca na odczytanie Å›ciezki dostÄ™pu do pliku .xml
      * 
      * @see XmlSerializable
-     * @return ³añcuch znakowy reprezentuj¹cy œcie¿kê dostêpu do pliku .xml
+     * @return ï¿½aï¿½cuch znakowy reprezentujÄ…cy Å›ciezkÄ™ dostÄ™pu do pliku .xml
      */
 	public String getXmlPath();
 	
 	/**
-     * Meotda pozawalaj¹ca na ustawienie œciezki dostêpu do pliku .xml
+     * Meotda pozawalajÄ…ca na ustawienie Å›ciezki dostÄ™pu do pliku .xml
      * 
      * @see XmlSerializable
-     * @param xmlPath ³añcuch znakowy reprezentuj¹cy now¹ œcie¿kê dostêpu do pliku .xml
+     * @param xmlPath ï¿½aï¿½cuch znakowy reprezentujacy nowÄ… Å›cieÅ¼kÄ™ dostÄ™pu do pliku .xml
      */
 	public void setXmlPath(String xmlPath);
 	
 	/**
-	 * Metoda koduj¹ca dany obiekt do formatu xml i zapisuj¹ca zakodowane dane do pliku
+	 * Metoda kodujÄ…ca dany obiekt do formatu xml i zapisujÄ…ca zakodowane dane do pliku
 	 */
 	public void encodeToXml();
 	
 	/**
-	 * Metoda dekoduj¹ca dany obiekt z formatu xml i odczytuj¹ca zakodowane dane z pliku
+	 * Metoda dekodujÄ…ca dany obiekt z formatu xml i odczytujÄ…ca zakodowane dane z pliku
 	 */
 	public void decodeFromXml();
 }

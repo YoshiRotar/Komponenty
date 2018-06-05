@@ -1,17 +1,17 @@
 package calendarlogic;
 /**
  * 
- * Interfejs wymuszaj¹cy implementacjê metody reaguj¹cej na nadejœcie czasu przypomnienia
+ * Interfejs wymuszajÄ…cy implementacjÄ™ metody reagujÄ…cej na nadejÅ›cie czasu przypomnienia
  * 
  * @author Mateusz Kuzniarek
- * @author Pawe³ M³ynarczyk
+ * @author PaweÅ‚ MÅ‚ynarczyk
  *
  */
 public interface AlarmListener 
 {
 	/**
-	 * Metoda wykonywana podczas nadejœcia ustawionego czasu przypomnienia
-	 * @param message ³añcuch znakowy zawieraj¹cy podstawowe informacje o przypominanym wydarzeniu 
+	 * Metoda wykonywana podczas nadejÅ›cia ustawionego czasu przypomnienia
+	 * @param message Å‚aÅ„cuch znakowy zawierajÄ…cy podstawowe informacje o przypominanym wydarzeniu 
 	 */
 	public void onAlarm(String message);
 }

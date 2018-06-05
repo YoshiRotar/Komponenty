@@ -13,10 +13,10 @@ import calendardata.CalendarEvent;
 
 /**
  * 
- * Klasa pozwalaj¹ca na po³¹czenie z baz¹ danych
+ * Klasa pozwalajÄ…ca na poÅ‚Ä…czenie z bazÄ… danych
  * 
  * @author Mateusz Kuzniarek
- * @author Pawe³ M³ynarczyk
+ * @author PaweÅ‚ MÅ‚ynarczyk
  * 
  */
 public class DatabaseProvider
@@ -24,7 +24,7 @@ public class DatabaseProvider
 	private Connection connection;
 	
 	/**
-	 * Metoda otwieraj¹ca po³¹czenie z baz¹ danych
+	 * Metoda otwierajÄ…ca poÅ‚Ä…czenie z bazÄ… danych
 	 */
 	private void openConnection()
 	{
@@ -40,7 +40,7 @@ public class DatabaseProvider
 	}
 	
 	/**
-	 * Metoda zamykaj¹ca po³¹czenie z baz¹ danych
+	 * Metoda zamykajÄ…ca poÅ‚Ä…czenie z bazÄ… danych
 	 */
 	private void closeConnection()
 	{
@@ -56,9 +56,9 @@ public class DatabaseProvider
 	
 	/**
 	 * 
-	 * Metoda pobieraj¹ca dane ze zdalnej bazy danych i zapisuj¹ca je do obiektu przechowuj¹cego dane na u¿ytek programu
+	 * Metoda pobierajÄ…ca dane ze zdalnej bazy danych i zapisujÄ…ca je do obiektu przechowujÄ…cego dane na uÅ¼ytek programu
 	 * 
-	 * @param context obiekt, do którego zapisywane s¹ dane z bazy danych
+	 * @param context obiekt, do ktÃ³rego zapisywane sÄ… dane z bazy danych
 	 */
 	public void readFromDatabase(CalendarEventContext context)
 	{
@@ -100,9 +100,9 @@ public class DatabaseProvider
 	}
 	
 	/**
-	 * Metoda zapisuj¹ca dane znajduj¹ce siê w pamiêci do zdalnej bazy danych
+	 * Metoda zapisujÄ…ca dane znajdujÄ…ce siÄ™ w pamiÄ™ci do zdalnej bazy danych
 	 * 
-	 * @param context obiekt zawieraj¹cy informacje o wydarzeniach
+	 * @param context obiekt zawierajÄ…cy informacje o wydarzeniach
 	 */
 	public void writeIntoDatabase(CalendarEventContext context)
 	{
