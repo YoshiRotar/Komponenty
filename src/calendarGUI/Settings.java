@@ -20,6 +20,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import calendarlogic.StyleContext;
+
+/**
+ * Klasa reprezentująca okno ustawień kalendarza, wraz z jego polami, silnie powiązana z StyleContext.
+ * 
+ * @author Paweł Młynarczyk
+ * @author Mateusz Kuzniarek
+ */
 @SuppressWarnings("serial")
 public class Settings extends JFrame 
 {
@@ -27,6 +35,13 @@ public class Settings extends JFrame
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	private JPanel contentPane;
 	
+	/**
+	 * Konstruktor klasy mający na celu utworzenie okna oraz elementów tego okna wraz z handlerami na poszczególne przyciski, oraz zdarzeniami,
+	 * wywołującymi metody StyleContext.
+	 * 
+	 * @param mainWindow referencja na okno główne, którego edycji stylu dotyczy okno ustawień 
+	 * @see StyleContext
+	 */
 	Settings(MainWindow mainWindow)
 	{
 		setSize(275,175);
@@ -122,8 +137,6 @@ public class Settings extends JFrame
 				mainWindow.getStyleContext().getStyle().setFontColor(fontColor);
 				mainWindow.getStyleContext().getStyle().setBackgroundColor(backgroundColor);
 				mainWindow.getStyleContext().getStyle().setAlarmPath(alarmPath);
-				//mainWindow.getCalendarEventContext().setAlarmPath(pathText.getText());
-				
 				mainWindow.printCalendar();
 				dispose();
 			}

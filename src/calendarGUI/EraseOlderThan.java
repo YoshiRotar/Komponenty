@@ -24,6 +24,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
+/**
+ * 
+ * Klasa pełniąca rolę okna, które służy do określenia daty, do której wszystkie wydarzenia z datą mniejszą zostaną usunięte.
+ * 
+ * @author Paweł Młynarczyk
+ * @author Mateusz Kuzniarek
+ *
+ */
 @SuppressWarnings("serial")
 public class EraseOlderThan extends JFrame
 {
@@ -33,6 +41,12 @@ public class EraseOlderThan extends JFrame
 	private SpinnerModel dateSpinnerModel = new SpinnerDateModel(Calendar.getInstance().getTime(), null, null, Calendar.HOUR_OF_DAY);
 	private JSpinner dateSpinner = new JSpinner(dateSpinnerModel);
 
+	/**
+	 * Konstruktor mający za zadanie utworzyć okno wraz z elementami, a następnie przekazać dane poprzez handler w przycisku do metody klasy CalendarEventContext.
+	 * 
+	 * @param source referencja na okno główne kalendarza, które zostanie poddane odświerzeniu po usunięciu wydarzeń z obiektu calendarEventContext również powiązanego z tym obiektem
+	 * @see CalendarEventContext
+	 */
 	public EraseOlderThan(MainWindow source)
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

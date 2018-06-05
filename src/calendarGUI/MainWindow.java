@@ -39,6 +39,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.BoxLayout;
 
+/**
+ * 
+ * Klasa będąca graficzną interpretacją głównego okna interfejsu użytkownika.
+ * 
+ * @author Paweł Młynarczyk
+ * @author Mateusz Kuzniarek
+ *
+ */
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame implements AlarmListener
 {
@@ -66,52 +74,104 @@ public class MainWindow extends JFrame implements AlarmListener
 	JButton toCurrentDay;
 	private JLabel[] weekDayLabels = new JLabel[7];
 	
+	/**
+	 * Metoda zwracająca referencję na aktualnie wybrane wydarzenie.
+	 * 
+	 * @return referencję na to wydarzenie
+	 */
 	public CalendarEvent getSelectedEvent()
 	{
 		return selectedEvent;
 	}
 
+	/**
+	 * Metoda ustawiająca wartość referencji na akutalnie wybrane wydarzenie.
+	 * 
+	 * @param selectedEvent referencja na to wydarzenie
+	 */
 	public void setSelectedEvent(CalendarEvent selectedEvent) 
 	{
 		this.selectedEvent = selectedEvent;
 	}
 	
+	/**
+	 * Metoda zwracająca referencję na pole calendarEventContext.
+	 * 
+	 * @return referencja na to pole
+	 * @see CalendarEventContext
+	 */
 	public CalendarEventContext getCalendarEventContext()
 	{
 		return calendarEventContext;
 	}
 	
+	/**
+	 * Metoda zwracająca referencję na pole styleContext.
+	 * 
+	 * @return referencja na to pole
+	 * @see StyleContext
+	 */
 	public StyleContext getStyleContext()
 	{
 		return style;
 	}
 	
+	/**
+	 * Metoda zwracająca aktualnie wybrany miesiąc.
+	 * 
+	 * @return wartość liczbowa z przedziału [0 - 11] odpowiadająca kolejnym miesiącom
+	 */
 	public int getMonth() 
 	{
 		return month;
 	}
 	
+	/**
+	 * Metoda ustawiająca aktualnie wybrany miesiąc.
+	 * 
+	 * @param month wartość liczbowa z przedziału [0 - 11] odpowiadająca kolejnym miesiącom
+	 */
 	public void setMonth(int month) 
 	{
 		this.month = month;
 	}
 	
+	/**
+	 * Metoda zwracająca aktualnie wybrany rok.
+	 * 
+	 * @return wartość liczbowa reprezentująca rok
+	 */
 	public int getYear() 
 	{
 		return year;
 	}
 	
+	/**
+	 * Metoda ustawiająca aktualnie wybrany rok.
+	 * 
+	 * @param year wartość liczbowa reprezentująca rok
+	 */
 	public void setYear(int year) 
 	{
 		this.year = year;
 	}
 	
+	/**
+	 * Metoda, która na podstawie pola buttonSelected określa wybrany przez użytkownika dzień.
+	 * 
+	 * @return wartość liczbowa reprezentująca dzień
+	 */
 	public int getDay()
 	{
 		if(buttonSelected==null) return 1;
 		return Integer.parseInt(this.buttonSelected.getText());
 	}
 
+	/**
+	 * Metoda główna, rozpoczynająca działanie programu, tworząca obiekt klasy MainWindow.
+	 * 
+	 * @param args tablica parametrów uruchomieniowych (nieużywana)
+	 */
 	public static void main(String[] args) 
 	{
 		MainWindow frame = new MainWindow();
@@ -119,6 +179,13 @@ public class MainWindow extends JFrame implements AlarmListener
 		frame.setVisible(true);
 	}	
 	
+	/**
+	 * Metoda wyświetlająca na panelu bocznym prawym, wszystkie wydarzenia z dnia wyliczonego na podstawie pola buttonSelected, w formacie:<br> Nazwa,<br> Miejsce,<br> Data rozpoczęcia.<br>
+	 * Istnieje możliwość wyboru wydarzenia z listy i przypisania go do pola selectedEvent celem wykonywania na nim dalszych operacji.
+	 * Po dwukrotnym kliknięciu na wydarzenie zostanie wyświetlone okno szczegółowe.
+	 * 
+	 * @see Detail
+	 */
 	public void printEvents()
 	{
 		if(buttonSelected==null) return;
@@ -172,6 +239,11 @@ public class MainWindow extends JFrame implements AlarmListener
 		scrollingEventPanel.repaint();
 	}
 	
+	/**
+	 * Metoda inicjalizująca główny panel kalendarza.
+	 * 
+	 * @param parent panel w którym zostanie zainicjalizowany kalendarz
+	 */
 	public void initCalendarPanel(JPanel parent)
 	{
 		 String[] weekDays = {"Pon", "Wt", "Sr", "Czw", "Pt", "So", "N"};
@@ -252,6 +324,9 @@ public class MainWindow extends JFrame implements AlarmListener
 		 parent.add(monthPanel, BorderLayout.SOUTH);
 	 }
 	 
+	/**
+	 * Metoda wyświetlająca kalendarz zgodnie z formatowaniem zawartym w obiekcie klasy StyleContext, oraz zaznaczająca na nim terminy trwania wydarzeń.
+	 */
 	 public void printCalendar()
 	 {
 		 for(int i=0; i<7; i++) weekDayLabels[i].setFont(new Font(style.getStyle().getFont(), Font.PLAIN, 30));
@@ -271,7 +346,6 @@ public class MainWindow extends JFrame implements AlarmListener
 		 if(dayOfWeek==0) dayOfWeek = 7;
 		 int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		 
-		 //na razie tylko tak prowizorycznie, fajnie byloby to dac w jedna petle
 		 for(int i=0; i<days.length; i++) days[i].setBackground(style.getStyle().getBackgroundColor());
 		 for(int i=0; i<daysInMonth; i++)
 		 {
@@ -285,6 +359,15 @@ public class MainWindow extends JFrame implements AlarmListener
 		 if(buttonSelected!=null && month==selectedMonth && year==selectedYear) buttonSelected.setBackground(Color.LIGHT_GRAY);
 	 }
 	
+	 /**
+	  * Konstruktor klasy MainWindow, któego zadaniem jest wyświetlenie wszystkich elementów na ekranie, oraz przypisanie zdarzeń do tych elementów wywołujących inne okna.
+	  * 
+	  * @see About
+	  * @see AddEvent
+	  * @see EditEvent
+	  * @see EraseOlderThan
+	  * @see Settings
+	  */
 	public MainWindow() 
 	{
 		
@@ -322,8 +405,6 @@ public class MainWindow extends JFrame implements AlarmListener
 		JMenu mnPlik = new JMenu("Plik");
 		menuBar.add(mnPlik);
 		
-		JMenuItem mntmNowy = new JMenuItem("Nowy");
-		mnPlik.add(mntmNowy);
 		
 		JMenuItem mntmZapiszDoBazdy = new JMenuItem("Zapisz do bazy danych");
 		mntmZapiszDoBazdy.addActionListener(new ActionListener() 
@@ -336,9 +417,6 @@ public class MainWindow extends JFrame implements AlarmListener
 		});
 		mnPlik.add(mntmZapiszDoBazdy);
 		
-		JMenuItem mntmZapiszDoXml = new JMenuItem("Zapisz do XML");
-		mnPlik.add(mntmZapiszDoXml);
-		
 		JMenuItem mntmWczytajZBazy = new JMenuItem("Wczytaj z bazy danych");
 		mntmWczytajZBazy.addActionListener(new ActionListener() 
 		{
@@ -350,9 +428,6 @@ public class MainWindow extends JFrame implements AlarmListener
 			}
 		});
 		mnPlik.add(mntmWczytajZBazy);
-		
-		JMenuItem mntmWczytajZXml = new JMenuItem("Wczytaj z XML");
-		mnPlik.add(mntmWczytajZXml);
 		
 		JMenuItem mntmKonwertujDo = new JMenuItem("Konwertuj do formatu standardowego");
 		mntmKonwertujDo.addActionListener(new ActionListener()
@@ -385,9 +460,6 @@ public class MainWindow extends JFrame implements AlarmListener
 			}
 		});
 		mnNewMenu.add(mntmUsuWydarzeniaStarsza);
-		
-		JMenuItem mntmFiltruj = new JMenuItem("Filtruj");
-		mnNewMenu.add(mntmFiltruj);
 		
 		JMenuItem mntmUstawienia = new JMenuItem("Ustawienia");
 		mntmUstawienia.addActionListener(new ActionListener() 
@@ -521,6 +593,12 @@ public class MainWindow extends JFrame implements AlarmListener
 		
 	}
 
+	/**
+	 * Metoda interfejsu AlarmListener, zdefiniowana jako uchwyt dla wydarzenia wystąpienia alarmu, w przypadku którego tworzony jest nowe okno AlarmWindow.
+	 * 
+	 * @param message wiadomość wyświetlona w oknie AlarmWindow
+	 * @see AlarmWindow
+	 */
 	@Override
 	public void onAlarm(String message) 
 	{
