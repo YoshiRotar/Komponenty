@@ -60,8 +60,10 @@ public class MainWindow extends JFrame implements AlarmListener
 	private int selectedYear;
 	private JButton selectedEventButton;
 	private CalendarEvent selectedEvent;
+	private JButton newEvent;
 	private JButton editEvent;
 	private JButton deleteEvent;
+	JButton toCurrentDay;
 	private JLabel[] weekDayLabels = new JLabel[7];
 	
 	public CalendarEvent getSelectedEvent()
@@ -441,8 +443,8 @@ public class MainWindow extends JFrame implements AlarmListener
 		JPanel options = new JPanel();
 		contentPane.add(options, BorderLayout.NORTH);
 		options.setPreferredSize(new Dimension(100,55));
-		JButton newEvent = new JButton("Dodaj Wydarzenie");
 		
+		newEvent = new JButton("Dodaj Wydarzenie");
 		
 		newEvent.addActionListener(new ActionListener() 
 		{
@@ -480,7 +482,7 @@ public class MainWindow extends JFrame implements AlarmListener
 		});
 		editEvent.setPreferredSize(buttonSize);
 		
-		JButton toCurrentDay = new JButton("Bieżący Dzień");
+		toCurrentDay = new JButton("Bieżący Dzień");
 		toCurrentDay.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent ae) 
@@ -522,8 +524,8 @@ public class MainWindow extends JFrame implements AlarmListener
 	@Override
 	public void onAlarm(String message) 
 	{
+		@SuppressWarnings("unused")
 		AlarmWindow alarmWindow = new AlarmWindow(message, style.getStyle().getAlarmPath());
-		
 	}
 
 }

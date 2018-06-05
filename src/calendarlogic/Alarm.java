@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit;
 import calendardata.CalendarEvent;
 /**
  * 
- * Obiekty klasy Alarm reprezentuj¹ pojedyncze przypomnienia 
+ * Obiekty klasy Alarm reprezentujï¿½ pojedyncze przypomnienia 
  * 
  * @author Mateusz Kuzniarek
- * @author Pawe³ M³ynarczyk
+ * @author Paweï¿½ Mï¿½ynarczyk
  *
  */
 public class Alarm implements Runnable
@@ -48,7 +48,7 @@ public class Alarm implements Runnable
 			}
 			if(calendarEvent.isRemovedFromTree()) return;
 			String message = "<html>Przypomnienie!<br>Nazwa: " + calendarEvent.getName() + "<br>Miejsce: " + calendarEvent.getPlace() +
-					"<br>Rozpoczêcie: " + dateFormat.format(Date.from(calendarEvent.getStartOfEvent().atZone(ZoneId.systemDefault()).toInstant()));
+					"<br>Rozpoczï¿½cie: " + dateFormat.format(Date.from(calendarEvent.getStartOfEvent().atZone(ZoneId.systemDefault()).toInstant()));
 			listener.onAlarm(message);
 		} 
 		catch (InterruptedException e) 
