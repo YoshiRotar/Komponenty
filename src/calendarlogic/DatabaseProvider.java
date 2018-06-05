@@ -11,10 +11,21 @@ import java.util.Iterator;
 
 import calendardata.CalendarEvent;
 
+/**
+ * 
+ * Klasa pozwalaj¹ca na po³¹czenie z baz¹ danych
+ * 
+ * @author Mateusz Kuzniarek
+ * @author Pawe³ M³ynarczyk
+ * 
+ */
 public class DatabaseProvider
 {	
 	private Connection connection;
 	
+	/**
+	 * Metoda otwieraj¹ca po³¹czenie z baz¹ danych
+	 */
 	private void openConnection()
 	{
 		try
@@ -28,6 +39,9 @@ public class DatabaseProvider
 		}
 	}
 	
+	/**
+	 * Metoda zamykaj¹ca po³¹czenie z baz¹ danych
+	 */
 	private void closeConnection()
 	{
 		try
@@ -40,6 +54,12 @@ public class DatabaseProvider
 		}
 	}
 	
+	/**
+	 * 
+	 * Metoda pobieraj¹ca dane ze zdalnej bazy danych i zapisuj¹ca je do obiektu przechowuj¹cego dane na u¿ytek programu
+	 * 
+	 * @param context obiekt, do którego zapisywane s¹ dane z bazy danych
+	 */
 	public void readFromDatabase(CalendarEventContext context)
 	{
 		ResultSet resultSet;
@@ -79,6 +99,11 @@ public class DatabaseProvider
 		}
 	}
 	
+	/**
+	 * Metoda zapisuj¹ca dane znajduj¹ce siê w pamiêci do zdalnej bazy danych
+	 * 
+	 * @param context obiekt zawieraj¹cy informacje o wydarzeniach
+	 */
 	public void writeIntoDatabase(CalendarEventContext context)
 	{
 		PreparedStatement preparedStatement;

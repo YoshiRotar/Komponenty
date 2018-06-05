@@ -11,8 +11,11 @@ import java.util.concurrent.TimeUnit;
 import calendardata.CalendarEvent;
 /**
  * 
- * Obiekty klasy Alarm reprezentuj¹ pojedyncze przypomnienia 
+ * Obiekty klasy Alarm reprezentuj¹ pojedyncze przypomnienia. Komunikuj¹ siê one z graficznym interfejsem u¿ytkownika
+ * przy pomocy wzorca projektowego - Obserwator Klasa ta implementuje interfejsc Runnable, aby umo¿liwiæ przy jej pomocy
+ * utworzenie nowego w¹tku.
  * 
+ * @see AlarmListener
  * @author Mateusz Kuzniarek
  * @author Pawe³ M³ynarczyk
  *
@@ -23,6 +26,11 @@ public class Alarm implements Runnable
 	private CalendarEvent calendarEvent;
 	private AlarmListener listener;
 
+	/**
+	 * Konstruktor uzupe³niaj¹cy pola podanymi wartoœciami
+	 * @param listener obiekt powiadamiany o nadejœciu ustawionego czasu przypomnienia
+	 * @param calendarEvent wydarzenie, które ma zostaæ przypomniane
+	 */
 	public Alarm(AlarmListener listener, CalendarEvent calendarEvent)
 	{
 		this.listener = listener;
@@ -31,6 +39,10 @@ public class Alarm implements Runnable
 	}
 
 	@Override
+	/**
+	 * Metoda oczekuj¹ca na nadejœcie czasu przypomnienia, a nastêpnie informuj¹ca o tym podany obiekt klasy AlarmListener.
+	 * Przeznaczona jest ona do dzia³ania w oddzielnym w¹tku.
+	 */
 	public void run() 
 	{
 		if(calendarEvent.getBuzzer()==null) return;

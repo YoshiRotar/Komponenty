@@ -16,29 +16,52 @@ import java.time.LocalDateTime;
 
 import calendardata.Style;
 
+/**
+ * Klasa zawieraj¹ca informacje o stylu graficznym aplikacji i udostêpniaj¹ca operacje odczytu i zapisu do pliku .xml
+ * 
+ * @see XmlSerializable
+ * @author Mateusz Kuzniarek
+ * @author Pawe³ M³ynarczyk
+ */
 public class StyleContext implements XmlSerializable
 {
 	private Style style = new Style();
 	private String xmlPath = "./data/styles.xml";
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 */
 	public Style getStyle()
 	{
 		return style;
 	}
 
 	@Override
+	/**
+	 * {@inheritDoc}
+	 * 
+	 */
 	public String getXmlPath()
 	{
 		return xmlPath;
 	}
 
 	@Override
+	/**
+	 * {@inheritDoc}
+	 * 
+	 */
 	public void setXmlPath(String xmlPath)
 	{
 		this.xmlPath = xmlPath;
 	}
 
 	@Override
+	/**
+	 * {@inheritDoc}
+	 * 
+	 */
 	public void encodeToXml()
 	{
 		XMLEncoder encoder=null;
@@ -72,6 +95,10 @@ public class StyleContext implements XmlSerializable
 	}
 
 	@Override
+	/**
+	 * {@inheritDoc}
+	 * 
+	 */
 	public void decodeFromXml()
 	{
 		XMLDecoder decoder=null;
