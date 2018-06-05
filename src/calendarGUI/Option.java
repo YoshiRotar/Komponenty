@@ -29,9 +29,16 @@ import javax.swing.border.EmptyBorder;
 import calendardata.CalendarEvent;
 import calendarlogic.CalendarEventContext;
 
-
+/**
+ * 
+ * Klasa abstrakcyjna będąca podstawą dla klas AddEvent i EditEvent, jako że ich konstrukcja jest bardzo zbliżona.
+ * 
+ * @author Paweł Młynarczyk
+ * @author Mateusz Kuzniarek
+ *
+ */
 @SuppressWarnings("serial")
-public class Option extends JFrame
+public abstract class Option extends JFrame
 {
 	protected MainWindow mainWindow;
 	protected CalendarEventContext calendarEventContext;
@@ -56,8 +63,9 @@ public class Option extends JFrame
 	protected JLabel alarmTimeLabel;
 	protected JLabel alarmDateLabel;
 	
-	
-
+	/**
+	 * Metoda tworząca blok służący wpisaniu nazwy wydarzenia.
+	 */
 	protected void addName()
 	{
 		//nazwa
@@ -71,6 +79,9 @@ public class Option extends JFrame
 		contentPane.add(textFieldName);
 	}
 	
+	/**
+	 * Metoda tworząca blok służący wpisaniu miejsca wydarzenia.
+	 */
 	protected void addPlace()
 	{
 		//miejsce
@@ -84,6 +95,9 @@ public class Option extends JFrame
 		contentPane.add(textFieldPlace);
 	}
 	
+	/**
+	 * Metoda tworząca blok służący wpisaniu opisu wydarzenia.
+	 */
 	protected void addDescription()
 	{
 		//opis
@@ -102,6 +116,12 @@ public class Option extends JFrame
 		contentPane.add(areaScrollPane);
 	}
 	
+	/**
+	 * Metoda tworząca blok służący wpisaniu czasu związanego z wydarzeniem.
+	 * 
+	 * @param label opis etykiety użytej w bloku
+	 * @param spinner referencja na obiekt spinnera dotyczącego czasu
+	 */
 	protected void addTime(String label, JSpinner spinner)
 	{
 		//godzina
@@ -114,6 +134,12 @@ public class Option extends JFrame
 		contentPane.add(spinner);
 	}
 	
+	/**
+	 * Metoda tworząca blok służący wpisaniu daty związanej z wydarzeniem.
+	 * 
+	 * @param label opis etykiety użytej w bloku
+	 * @param spinner referencja na obiekt spinnera dotyczącego daty
+	 */
 	protected void addDate(String label, JSpinner spinner)
 	{
 		//data
@@ -126,6 +152,9 @@ public class Option extends JFrame
 		contentPane.add(spinner);
 	}
 	
+	/**
+	 * Metoda tworząca blok służący do ustawiania parametrów brzęczyka.
+	 */
 	protected void addAlarm()
 	{
 		//przypomnienie
@@ -183,6 +212,12 @@ public class Option extends JFrame
 		for(Component c : alarmDatePanel.getComponents()) c.setEnabled(false);
 	}
 	
+	/**
+	 * Metoda tworząca obiekt CalendarEvent z danych zebranych w blokach tego okna
+	 * 
+	 * @return obiekt klasy CalendarEvent
+	 * @see CalendarEvent
+	 */
 	protected CalendarEvent makeEventOutOfTakenData()
 	{
 		String name = textFieldName.getText();
@@ -206,6 +241,14 @@ public class Option extends JFrame
     	return new CalendarEvent(name, place, startOfEvent, endOfEvent, description, buzzer);
 	}
 	
+	/**
+	 * Konstruktor okna będącego wzorcem dla pózniejszych okien AddEvent i EditEvent
+	 * 
+	 * @param calendarEventContext obiekt klasy CalendarEventContext, do którego metod będą odnosić się klasy potomne
+	 * @param mainWindow referencja na obiekt okna głównego, które zostanie odświerzone w przypadku operacji na nim
+	 * @see AddEvent
+	 * @see EditEvent
+	 */
 	public Option(CalendarEventContext calendarEventContext, MainWindow mainWindow)
 	{
 		LocalDate date = LocalDate.of(mainWindow.getYear(), mainWindow.getMonth()+1, mainWindow.getDay());

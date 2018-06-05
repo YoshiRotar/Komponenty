@@ -15,7 +15,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-
+/**
+ * Klasa reprezentująca okno powiadomienia, w przypadku wywołania się alarmu.
+ * 
+ * @author Paweł Młynarczyk
+ * @author Mateusz Kuzniarek
+ */
 @SuppressWarnings("serial")
 public class AlarmWindow extends JFrame
 {
@@ -24,6 +29,12 @@ public class AlarmWindow extends JFrame
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	Clip clip;
 	
+	/**
+	 * Konstruktor klasy mający na celu odtworzenie wiadomości oraz puszczenie dzwięku alarmu.
+	 * 
+	 * @param message wiadomość tekstowa wyświetlona w oknie
+	 * @param alarmPath ścieżka do pliku dzwiękowego wav
+	 */
 	AlarmWindow(String message, String alarmPath)
 	{
 		try

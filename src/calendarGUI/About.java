@@ -8,12 +8,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * Klasa będąca reprezentacją okna wyświetlającego informacje o programie.
+ * 
+ * @author Paweł Młynarczyk
+ * @author Mateusz Kuzniarek
+ */
 @SuppressWarnings("serial")
 public class About extends JFrame
 {
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	private JPanel contentPane;
 	
+	/**
+	 * Konstruktor którego zadaniem jest wyświetlenie elementów teksowych, takich jak autorzy czy wersja programu.
+	 */
 	About()
 	{
 		setSize(200,200);

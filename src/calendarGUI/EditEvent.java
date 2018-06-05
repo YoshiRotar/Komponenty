@@ -14,10 +14,22 @@ import javax.swing.JPanel;
 import calendardata.CalendarEvent;
 import calendarlogic.CalendarEventContext;
 
+/**
+ * Klasa reprezentująca okno, pośredniczące edytowaniu wydarzeń z kalendarza, rozszerzająca możliwości klasy Option.
+ * 
+ * @author Paweł Młynarczyk
+ * @author Mateusz Kuzniarek
+ *
+ */
 @SuppressWarnings("serial")
 public class EditEvent extends Option
 {
-	//tutaj jako argument trzeba dac reprezentacje eventu w warstwie logiki
+	/**
+	 * Metoda ustawiająca pola w oknie tak by odpowiadały zaznaczonemu w głównym oknie wydarzeniu.
+	 * 
+	 * @param mainWindow okno z którego na podstawie pola selectedEvent brane są wartości
+	 * @see MainWindow
+	 */
 	private void initValues(MainWindow mainWindow)
 	{
 		
@@ -43,6 +55,14 @@ public class EditEvent extends Option
 		
 	}
 	
+	/**
+	 * Konstruktor mający na celu wyświetlenie okna edycji wydarzenia wraz z handlerami do przycisków,
+	 * za pomocą których wywoływane są metody obiektu klasy CalendarEventContext z parametrami zebranymi z pozostałych elementów okna.
+	 * 
+	 * @param calendarEventContext obiekt klasy CalendarEventContext, do którego metod odnosi się ta klasa
+	 * @param mainWindow referencja na obiekt okna głównego, które zostanie odświerzone w przypadku edycji wydarzenia
+	 * @see CalendarEventContext
+	 */
 	EditEvent(CalendarEventContext calendarEventContext, MainWindow mainWindow)
 	{
 		super(calendarEventContext, mainWindow);

@@ -15,6 +15,13 @@ import javax.swing.border.EmptyBorder;
 
 import calendardata.CalendarEvent;
 
+/**
+ * Klasa reprezentująca okno będące podsumowaniem danych dotyczących wydarzenia.
+ * 
+ * @author Paweł Młynarczyk
+ * @author Mateusz Kuzniarek
+ *
+ */
 @SuppressWarnings("serial")
 public class Details extends JFrame
 {
@@ -22,6 +29,12 @@ public class Details extends JFrame
 	private Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy H:mm"); 
 	
+	/**
+	 * Konstrukor klasy mający na celu utworzenie okna, oraz elementów tekstowych opisujących dane wydarzenie.
+	 * 
+	 * @param calendarEvent opisywane wydarzenie
+	 * @see CalendarEvent
+	 */
 	Details(CalendarEvent calendarEvent)
 	{
 		setSize(300,300);

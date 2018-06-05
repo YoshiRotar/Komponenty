@@ -13,10 +13,24 @@ import javax.swing.JPanel;
 import calendardata.CalendarEvent;
 import calendarlogic.CalendarEventContext;
 
+/**
+ * Klasa reprezentująca okno, pośredniczące wprowadzaniu nowych wydarzeń do kalendarza, rozszerzająca możliwości klasy Option.
+ * 
+ * @author Paweł Młynarczyk
+ * @author Mateusz Kuzniarek
+ */
 @SuppressWarnings("serial")
 public class AddEvent extends Option
 {
-	
+	/**
+	 * Konstruktor mający na celu utworzenie okna, oraz jego elementów, wraz z handlerami do przycisków, 
+	 * za pomocą których wywoływana jest metoda dodawania nowego wydarzenia do calendarEventContext, 
+	 * na podstawie danych zebranych z pozostałych elementów okna.
+	 * 
+	 * @param calendarEventContext obiekt klasy CalendarEventContext, do którego metod odnosi się ta klasa
+	 * @param mainWindow referencja na obiekt okna głównego, które zostanie odświerzone w przypadku dodania wydarzenia
+	 * @see CalendarEventContext
+	 */
 	AddEvent(CalendarEventContext calendarEventContext, MainWindow mainWindow)
 	{
 		super(calendarEventContext, mainWindow);
