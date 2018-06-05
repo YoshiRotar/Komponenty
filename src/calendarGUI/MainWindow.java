@@ -130,12 +130,6 @@ public class MainWindow extends JFrame implements AlarmListener
 		scrollingEventPanel.removeAll();
 		for(CalendarEvent calendarEvent : calendarEventContext.getEventsFromCertainDay(LocalDate.of(selectedYear, selectedMonth+1, day)))
 		{
-			/*
-			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +"Miejsce: " + calendarEvent.getPlace()+ "<br>" +
-						  "Czas: " +  calendarEvent.getStartOfEvent().getHour() + ":" + calendarEvent.getStartOfEvent().getMinute() + "<br>" +
-						  "Zako?czenie; " + calendarEvent.getEndOfEvent().toString() + "<br>" +
-						  "Opis: " + calendarEvent.getDescription() + "</html>";
-						  */
 			String text = "<html>Nazwa: " + calendarEvent.getName() +"<br>" +
 						  "Miejsce: " + calendarEvent.getPlace()+ "<br>" +
 						  "Czas: " +  calendarEvent.getStartOfEvent().getHour() + ":" +
@@ -183,7 +177,7 @@ public class MainWindow extends JFrame implements AlarmListener
 		 for(int i=0; i<7; i++)
 		 {
 			 weekDayLabels[i] = new JLabel(weekDays[i], SwingConstants.CENTER);
-			 weekDayLabels[i].setFont(new Font(style.getFont(), Font.PLAIN, 20));
+			 weekDayLabels[i].setFont(new Font(style.getStyle().getFont(), Font.PLAIN, 20));
 			 dayPanel.add(weekDayLabels[i]);
 		 }
 		 for (int i = 0; i<days.length; i++) 
@@ -258,7 +252,7 @@ public class MainWindow extends JFrame implements AlarmListener
 	 
 	 public void printCalendar()
 	 {
-		 for(int i=0; i<7; i++) weekDayLabels[i].setFont(new Font(style.getFont(), Font.PLAIN, 30));
+		 for(int i=0; i<7; i++) weekDayLabels[i].setFont(new Font(style.getStyle().getFont(), Font.PLAIN, 30));
 		 for(int i=0; i<days.length; i++)
 		 {
 			 days[i].setText("");
