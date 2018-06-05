@@ -41,7 +41,7 @@ public class AlarmWindow extends JFrame
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			System.out.println("Nie udalo sie odtworzyc pliku");
 		}
 			
 		this.addWindowListener( new WindowAdapter()
