@@ -8,6 +8,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -184,7 +187,7 @@ public class MainWindow extends JFrame implements AlarmListener
 	 * Istnieje możliwość wyboru wydarzenia z listy i przypisania go do pola selectedEvent celem wykonywania na nim dalszych operacji.
 	 * Po dwukrotnym kliknięciu na wydarzenie zostanie wyświetlone okno szczegółowe.
 	 * 
-	 * @see Detail
+	 * @see Details
 	 */
 	public void printEvents()
 	{
@@ -388,6 +391,33 @@ public class MainWindow extends JFrame implements AlarmListener
 			  style.encodeToXml(); 
 		      dispose();
 		   }
+		});
+		
+		this.setFocusable(true);
+		this.addKeyListener( new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e) 
+			{
+
+		    	System.out.println("ccc");
+			    if(e.getKeyCode() == KeyEvent.VK_F1)
+			    {
+			    	System.out.println("ggg");
+			    	AddEvent add = new AddEvent(calendarEventContext, thisWindow);
+			    }
+			}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
 		});
 		
 		calendarEventContext.decodeFromXml();

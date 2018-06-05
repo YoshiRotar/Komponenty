@@ -50,9 +50,10 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 		
 	}
 	
-	/*
+	/**
 	 *  Sprawdzenie, czy wydarzenie zostało usunięte. Pozwala to zadecydować o tym,
 	 *  czy ustawione wcześniej przypomnienie powinno się uaktywnić
+	 *  @return wartość logiczna informująca o tym, czy wydarzenie zostało usunięte
 	 */
 	public boolean isRemovedFromTree() 
 	{
@@ -108,7 +109,7 @@ public class CalendarEvent implements Comparable<CalendarEvent>
 	}
 
 	/**
-	 * MEtoda zwracająca miejsce wydarzenia
+	 * Metoda zwracająca miejsce wydarzenia
 	 * @return miejsce wydarzenia
 	 */
 	public String getPlace()

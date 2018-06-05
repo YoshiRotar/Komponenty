@@ -213,7 +213,7 @@ public class CalendarEventContext implements XmlSerializable
 	}
         
 	/**
-	 * Metoda zwracaj�ca wydarzenie rozpoczynajace się w danej chwili czasowej identyfikuj�cej dane wydarzenie
+	 * Metoda zwracająca wydarzenie rozpoczynajace się w danej chwili czasowej identyfikującej dane wydarzenie
 	 * 
 	 * @param dateOfEvent chwila rozpoczęcia wydarzenia
 	 * @return wydarzenie rozpoczynające się w danej chwili

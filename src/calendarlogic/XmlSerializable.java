@@ -12,7 +12,7 @@ public interface XmlSerializable
      * Metoda pozawalająca na odczytanie ściezki dostępu do pliku .xml
      * 
      * @see XmlSerializable
-     * @return �a�cuch znakowy reprezentujący ściezkę dostępu do pliku .xml
+     * @return łańcuch znakowy reprezentujący ściezkę dostępu do pliku .xml
      */
 	public String getXmlPath();
 	
@@ -20,7 +20,7 @@ public interface XmlSerializable
      * Meotda pozawalająca na ustawienie ściezki dostępu do pliku .xml
      * 
      * @see XmlSerializable
-     * @param xmlPath �a�cuch znakowy reprezentujacy nową ścieżkę dostępu do pliku .xml
+     * @param xmlPath łańcuch znakowy reprezentujacy nową ścieżkę dostępu do pliku .xml
      */
 	public void setXmlPath(String xmlPath);
 	
